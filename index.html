@@ -35,54 +35,36 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #D32F2F; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #B71C1C; }
-        .nav-item.active { background-color: rgba(255, 255, 255, 0.15); border-left: 4px solid #FBC02D; font-weight: 600; }
+        
+        /* Top Navigation styling */
+        .nav-item.active { background-color: rgba(255, 255, 255, 0.15); border-bottom-color: #FBC02D; font-weight: 600; color: #FFF9C4; }
+        
         .calendar-day { min-height: 80px; transition: 0.2s; cursor: pointer; }
         .calendar-day:hover { background-color: #FFF9C4; }
         .today-mark { background-color: #D32F2F; color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; }
     </style>
 </head>
-<body class="flex h-screen text-gray-800">
+<body class="flex flex-col h-screen text-gray-800 bg-bgSoft">
 
-    <aside class="w-64 bg-wmkRed text-white flex flex-col shadow-xl z-20 flex-shrink-0 transition-transform duration-300" id="sidebar">
-        <div class="p-5 flex items-center gap-3 border-b border-red-700">
-            <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-12 h-12 bg-white rounded-full p-1 shadow">
-            <div>
-                <h1 class="text-sm font-bold leading-tight">ปฏิทินการปฏิบัติงาน</h1>
-                <p class="text-xs text-wmkYellowLight">โรงเรียนวัดแม่กะ</p>
-            </div>
+    <header class="bg-wmkRed text-white shadow-md z-20 flex-shrink-0">
+        <div class="flex flex-col items-center justify-center py-5 border-b border-red-800">
+            <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-16 h-16 bg-white rounded-full p-1 shadow-lg mb-3">
+            <h1 class="text-xl font-bold leading-tight tracking-wide">ปฏิทินการปฏิบัติงาน</h1>
+            <p class="text-sm text-wmkYellowLight mt-1">โรงเรียนวัดแม่กะ</p>
         </div>
-
-        <nav class="flex-1 px-3 py-6 space-y-2">
-            <a href="#" onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg text-sm hover:bg-white hover:bg-opacity-10 transition">
-                <i class="fas fa-chart-pie w-5"></i> แดชบอร์ด
+        
+        <nav class="flex justify-center bg-wmkRedDark overflow-x-auto">
+            <a href="#" onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-chart-pie"></i> แดชบอร์ด
             </a>
-            <a href="#" onclick="switchView('library')" id="nav-library" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm hover:bg-white hover:bg-opacity-10 transition">
-                <i class="fas fa-folder-open w-5"></i> คลังภารกิจทั้งหมด
-            </a>
-            <a href="#" onclick="switchView('settings')" id="nav-settings" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm hover:bg-white hover:bg-opacity-10 transition">
-                <i class="fas fa-cog w-5"></i> ตั้งค่าระบบ
+            <a href="#" onclick="switchView('library')" id="nav-library" class="nav-item px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-folder-open"></i> คลังภารกิจทั้งหมด
             </a>
         </nav>
+    </header>
 
-        <div class="p-4 border-t border-red-700 bg-wmkRedDark text-center">
-            <p class="text-xs text-red-200">จำนวนผู้เข้าชมสะสม</p>
-            <div class="text-xl font-bold text-wmkYellow flex items-center justify-center gap-2 mt-1">
-                <i class="fas fa-users text-sm"></i> <span id="visitorCountDisplay">...</span>
-            </div>
-        </div>
-    </aside>
-
-    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-bgSoft relative">
-        <header class="bg-white shadow-sm p-4 flex justify-between items-center md:hidden">
-            <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-8 h-8">
-            <button onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" class="text-wmkRed text-xl focus:outline-none">
-                <i class="fas fa-bars"></i>
-            </button>
-        </header>
-
-        <div class="flex-1 overflow-y-auto p-4 md:p-8 w-full relative">
-            
-            <div id="view-dashboard" class="fade-in space-y-6">
+    <main class="flex-1 overflow-y-auto p-4 md:p-8 w-full relative">
+        <div class="max-w-7xl mx-auto"> <div id="view-dashboard" class="fade-in space-y-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl shadow-sm border-l-4 border-wmkRed">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมงาน</h2>
@@ -131,7 +113,8 @@
                         <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-gray-500 mb-2">
                             <div class="text-red-500">อา.</div><div>จ.</div><div>อ.</div><div>พ.</div><div>พฤ.</div><div>ศ.</div><div class="text-wmkRed">ส.</div>
                         </div>
-                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200"></div>
+                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200">
+                            </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col h-[500px]">
@@ -139,7 +122,8 @@
                             <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>งานที่เลือกวันนี้</h3>
                             <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full" id="selectedDateText"></span>
                         </div>
-                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList"></div>
+                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList">
+                            </div>
                     </div>
                 </div>
             </div>
@@ -166,7 +150,7 @@
                         </select>
                         <select id="filterCategory" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
                             <option value="">ทุกหมวดหมู่</option>
-                        </select>
+                            </select>
                     </div>
 
                     <div class="overflow-x-auto rounded-lg border border-gray-200">
@@ -182,52 +166,13 @@
                                     <th class="p-3 text-center">จัดการ</th>
                                 </tr>
                             </thead>
-                            <tbody id="taskTableBody" class="divide-y divide-gray-200"></tbody>
+                            <tbody id="taskTableBody" class="divide-y divide-gray-200">
+                                </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <div id="view-settings" class="hidden fade-in space-y-6">
-                 <h2 class="text-xl font-bold text-gray-800 border-l-4 border-wmkRed pl-3">ตั้งค่าระบบ</h2>
-                 
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 opacity-50 relative pointer-events-none">
-                         <div class="absolute inset-0 z-10 flex items-center justify-center bg-white bg-opacity-70">
-                             <span class="bg-gray-800 text-white text-xs px-3 py-1 rounded font-bold">เพิ่ม/แก้ไขหมวดหมู่ได้ที่ Google Sheets ชีต Categories</span>
-                         </div>
-                         <h3 class="font-bold text-gray-800 mb-4 flex items-center"><i class="fas fa-tags text-wmkRed mr-2"></i>จัดการหมวดหมู่ภารกิจ</h3>
-                         <div class="flex gap-2 mb-6">
-                             <input type="text" id="newCatName" placeholder="ชื่อหมวดหมู่ใหม่..." class="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm">
-                             <input type="color" id="newCatColor" value="#2F65E3" class="w-10 h-10 rounded cursor-pointer border-0 p-0">
-                             <button class="bg-wmkRed text-white px-4 py-2 rounded-lg text-sm hover:bg-wmkRedDark"><i class="fas fa-plus"></i> เพิ่ม</button>
-                         </div>
-                     </div>
-
-                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-                        <h3 class="font-bold text-gray-800 mb-4 flex items-center"><i class="fab fa-line text-green-500 mr-2"></i>การตั้งค่า LINE Reminder</h3>
-                        <div class="space-y-4">
-                            <div class="p-3 bg-green-50 rounded-lg border border-green-100">
-                                <p class="text-sm text-green-800 font-bold mb-1"><i class="fas fa-check-circle mr-1"></i>วิธีแก้ไข Token และ User ID</p>
-                                <p class="text-xs text-green-700 leading-relaxed">
-                                    ให้ไปที่ <b>Google Sheets</b> ของคุณ <br>
-                                    เปิดชีตชื่อ <b>Settings</b> <br>
-                                    แล้วนำ Channel Token และ User ID ไปวางที่นั่นเพื่อความปลอดภัยครับ
-                                </p>
-                            </div>
-                            
-                            <div class="p-3 bg-red-50 rounded-lg border border-red-100 mt-4">
-                                <p class="text-sm text-red-800 font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>วิธีการเชื่อมต่อระบบแจ้งเตือน</p>
-                                <p class="text-xs text-red-600 leading-relaxed">
-                                    ระบบส่งแจ้งเตือนทำงานผ่าน Google Apps Script <br>
-                                    กรุณาไปตั้งค่า <b>Time-driven Trigger (ทุก 1 นาที)</b> ที่หน้า Apps Script <br>
-                                    เพื่อให้ระบบเช็กเวลาและส่งข้อความอัตโนมัติ
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-            </div>
         </div>
     </main>
 
@@ -286,7 +231,8 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่ภารกิจ <span class="text-red-500">*</span></label>
-                        <select id="taskCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-wmkRed outline-none h-9 text-sm"></select>
+                        <select id="taskCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-wmkRed outline-none h-9 text-sm">
+                        </select>
                     </div>
                 </div>
 
@@ -325,7 +271,7 @@
     </div>
 
     <script>
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxoJBjHrXfmD5roMjg2A_WV3nq9nSkaAuy9senxbwqrR25OGzEC9yFZdsN1D8vYLOg5/exec";
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz0OgWZkx82w4LM_6raqdfRQf1OetctZs3fvP8t_CkoGvv_mfpN5aJRrLT8cdkYAQ8/exec";
 
         async function apiCall(action, payload = {}) {
             try {
@@ -342,7 +288,6 @@
         }
 
         let appState = {
-            visitorCount: 0,
             currentDate: new Date(),
             selectedDate: new Date(),
             categories: [],
@@ -395,7 +340,6 @@
             }));
             
             appState.categories = data.categories || [];
-            document.getElementById('visitorCountDisplay').innerText = data.visitorCount || 1;
             
             renderCategoryDropdowns();
             renderCalendar();
@@ -409,13 +353,8 @@
             
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-library').classList.add('hidden');
-            document.getElementById('view-settings').classList.add('hidden');
             
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
-            
-            if(window.innerWidth < 768) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-            }
         }
 
         function updateKPIs() {
@@ -604,7 +543,7 @@
         async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
             if(pwd !== 'wmk' && pwd !== 'Wmk') {
-                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่านเพื่อบันทึกข้อมูล' });
+                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
                 return;
             }
 
@@ -652,14 +591,11 @@
             }
         }
 
-        // อัปเดต: เพิ่มการเรียกขอรหัสผ่านก่อนเปลี่ยนสถานะ Checkbox
         async function toggleTaskStatus(checkboxElement, id) {
-            // สำรองค่าเดิมไว้ก่อน ถ้ายกเลิกจะได้เปลี่ยนกลับถูก
             const isChecked = checkboxElement.checked;
-            
             const { value: password } = await Swal.fire({
                 title: 'ยืนยันการเปลี่ยนสถานะ',
-                text: "กรุณากรอกรหัสผ่าน",
+                text: "กรุณากรอกรหัสผ่าน (wmk)",
                 input: 'password',
                 inputPlaceholder: 'รหัสผ่าน',
                 icon: 'warning',
@@ -670,10 +606,9 @@
             });
 
             if (password !== 'wmk' && password !== 'Wmk') {
-                if (password !== undefined) { // กรณีพิมพ์รหัสผิด
+                if (password !== undefined) { 
                     Swal.fire('รหัสผ่านผิด', '', 'error');
                 }
-                // ถ้ากดยกเลิก หรือรหัสผิด คืนค่า Checkbox กลับไปเหมือนเดิม
                 checkboxElement.checked = !isChecked;
                 return;
             }
@@ -687,7 +622,7 @@
                     const newData = await apiCall('getInitialData');
                     initApp(newData);
                 } catch (error) {
-                    checkboxElement.checked = !isChecked; // คืนค่าถ้าเกิด Error
+                    checkboxElement.checked = !isChecked; 
                     Swal.fire({ icon: 'error', title: 'อัปเดตล้มเหลว', text: error.message });
                 }
             }
