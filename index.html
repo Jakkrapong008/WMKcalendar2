@@ -74,7 +74,7 @@
             <div id="view-dashboard" class="fade-in space-y-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl shadow-sm border-l-4 border-wmkRed">
                     <div>
-                        <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมงาน</h2>
+                        <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมกิจกรรม</h2>
                         <p class="text-sm text-gray-500">ดูปฏิทิน และกิจกรรมที่ต้องทำ</p>
                     </div>
                     <div class="mt-3 md:mt-0 font-medium text-wmkRed">
@@ -85,7 +85,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-gradient-to-r from-blue-500 to-blue-400 rounded-xl p-5 text-white shadow hover-card relative overflow-hidden">
                         <i class="fas fa-calendar-day absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
-                        <h3 class="text-sm font-medium opacity-90">งานวันนี้</h3>
+                        <h3 class="text-sm font-medium opacity-90">กิจกรรมวันนี้</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-today">0</p>
                         <p class="text-xs mt-2 opacity-80">รายการทั้งหมดของวันนี้</p>
                     </div>
@@ -93,13 +93,13 @@
                         <i class="fas fa-clock absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
                         <h3 class="text-sm font-medium opacity-90">รอดำเนินการ</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-pending">0</p>
-                        <p class="text-xs mt-2 opacity-80">งานที่ค้างและกำลังทำ</p>
+                        <p class="text-xs mt-2 opacity-80">กิจกรรมที่ค้างและกำลังทำ</p>
                     </div>
                     <div class="bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl p-5 text-white shadow hover-card relative overflow-hidden">
                         <i class="fas fa-check-circle absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
                         <h3 class="text-sm font-medium opacity-90">เสร็จสิ้นแล้ว</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-done">0</p>
-                        <p class="text-xs mt-2 opacity-80">ปิดงานเรียบร้อย</p>
+                        <p class="text-xs mt-2 opacity-80">ปิดกิจกรรมเรียบร้อย</p>
                     </div>
                 </div>
 
@@ -113,7 +113,7 @@
                             </div>
                             <div class="flex gap-2">
                                 <button onclick="renderCalendar()" class="text-sm px-3 py-1.5 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition"><i class="fas fa-undo mr-1"></i> วันนี้</button>
-                                <button onclick="openTaskModal()" class="text-sm px-4 py-1.5 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-1"></i> เพิ่มงานใหม่</button>
+                                <button onclick="openTaskModal()" class="text-sm px-4 py-1.5 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-1"></i> เพิ่มกิจกรรมใหม่</button>
                             </div>
                         </div>
                         
@@ -143,7 +143,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
-                        <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่องาน..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onkeyup="renderTable()">
+                        <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่อกิจกรรม..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onkeyup="renderTable()">
                         <select id="filterStatus" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
                             <option value="">ทุกสถานะการทำงาน</option>
                             <option value="รอดำเนินการ">รอดำเนินการ</option>
@@ -216,7 +216,7 @@
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">คำอธิบายเพิ่มเติม</label>
-                    <textarea id="taskDesc" rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="รายละเอียดงาน..."></textarea>
+                    <textarea id="taskDesc" rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="รายละเอียดกิจกรรม..."></textarea>
                 </div>
 
                 <div class="grid grid-cols-3 gap-3">
@@ -432,7 +432,7 @@
                     let doneStrike = t.status === 'เสร็จสิ้น' ? 'line-through opacity-50' : '';
                     taskHtml += `<div class="text-[10px] truncate text-left px-1 mt-1 rounded text-white ${doneStrike}" style="background-color: ${catColor}">${t.title}</div>`;
                 });
-                if(dayTasks.length > 3) taskHtml += `<div class="text-[9px] text-gray-500 text-left mt-1">+อีก ${dayTasks.length - 3} งาน</div>`;
+                if(dayTasks.length > 3) taskHtml += `<div class="text-[9px] text-gray-500 text-left mt-1">+อีก ${dayTasks.length - 3} กิจกรรม</div>`;
 
                 let dayClass = `bg-white p-1 flex flex-col calendar-day ${isSelected ? 'ring-2 ring-inset ring-wmkRed bg-red-50' : ''}`;
                 let numClass = isToday ? 'today-mark' : 'text-sm font-medium text-gray-700 w-7 h-7 flex items-center justify-center';
@@ -479,7 +479,7 @@
             });
             
             if(tasks.length === 0) {
-                list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm flex flex-col items-center"><i class="far fa-folder-open text-4xl mb-2 opacity-50"></i>ไม่มีงานในวันนี้</div>`;
+                list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm flex flex-col items-center"><i class="far fa-folder-open text-4xl mb-2 opacity-50"></i>ไม่มีกิจกรรมในวันนี้</div>`;
                 return;
             }
             
@@ -510,7 +510,7 @@
             document.getElementById('taskPassword').value = ''; 
             
             if (taskId) {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขงาน';
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขกิจกรรม';
                 const t = appState.tasks.find(x => String(x.id) === String(taskId));
                 
                 if (t) {
@@ -547,7 +547,7 @@
                     }
                 }
             } else {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างงานใหม่';
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างกิจกรรมใหม่';
                 document.getElementById('taskId').value = '';
                 document.getElementById('taskTitle').value = '';
                 document.getElementById('taskLink').value = '';
@@ -579,7 +579,7 @@
             const title = document.getElementById('taskTitle').value.trim();
             const date = document.getElementById('taskDate').value;
             if(!title || !date) {
-                Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่องานและวันที่' });
+                Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่อกิจกรรมและวันที่' });
                 return;
             }
 
