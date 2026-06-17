@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปฏิทินการปฏิบัติงาน โรงเรียนวัดแม่กะ</title>
+    <title>ปฏิทินกิจกรรม โรงเรียนวัดแม่กะ</title>
     
     <link rel="icon" type="image/png" href="https://img2.pic.in.th/logob0b7643db577ceee.png">
     
@@ -52,16 +52,16 @@
     <header class="bg-wmkRed text-white shadow-md z-20">
         <div class="flex flex-col items-center justify-center py-5 border-b border-red-800">
             <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-16 h-16 bg-white rounded-full p-1 shadow-lg mb-3">
-            <h1 class="text-xl font-bold leading-tight tracking-wide">ปฏิทินการปฏิบัติงาน</h1>
+            <h1 class="text-xl font-bold leading-tight tracking-wide">ปฏิทินกิจกรรม</h1>
             <p class="text-sm text-wmkYellowLight mt-1">โรงเรียนวัดแม่กะ</p>
         </div>
         
         <nav class="flex justify-center bg-wmkRedDark overflow-x-auto">
             <a href="#" onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
-                <i class="fas fa-chart-pie"></i> แดชบอร์ด
+                <i class="fas fa-chart-pie"></i> ปฏิทิน
             </a>
             <a href="#" onclick="switchView('library')" id="nav-library" class="nav-item px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
-                <i class="fas fa-folder-open"></i> คลังภารกิจทั้งหมด
+                <i class="fas fa-folder-open"></i> กิจกรรมทั้งหมด
             </a>
             <a href="https://wmk-portal.vercel.app/" target="_blank" class="nav-item px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
                 <i class="fas fa-globe"></i> WMK-Portal
@@ -75,7 +75,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl shadow-sm border-l-4 border-wmkRed">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมงาน</h2>
-                        <p class="text-sm text-gray-500">ดูปฏิทิน และงานที่ต้องทำ</p>
+                        <p class="text-sm text-gray-500">ดูปฏิทิน และกิจกรรมที่ต้องทำ</p>
                     </div>
                     <div class="mt-3 md:mt-0 font-medium text-wmkRed">
                         <i class="far fa-calendar-alt mr-2"></i><span id="currentDateDisplay"></span>
@@ -126,7 +126,7 @@
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col h-[500px]">
                         <div class="flex justify-between items-center mb-4 border-b pb-2">
-                            <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>งานที่เลือกวันนี้</h3>
+                            <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>กิจกรรมที่เลือกวันนี้</h3>
                             <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full" id="selectedDateText"></span>
                         </div>
                         <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList">
@@ -138,8 +138,8 @@
             <div id="view-library" class="hidden fade-in space-y-6">
                 <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-wmkYellow">
                     <div class="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
-                        <h2 class="text-xl font-bold text-gray-800">คลังภารกิจทั้งหมด</h2>
-                        <button onclick="openTaskModal()" class="px-4 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-2"></i>เพิ่มงานใหม่</button>
+                        <h2 class="text-xl font-bold text-gray-800">กิจกรรมทั้งหมด</h2>
+                        <button onclick="openTaskModal()" class="px-4 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-2"></i>เพิ่มกิจกรรมใหม่</button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
@@ -165,7 +165,7 @@
                             <thead class="bg-gray-800 text-white">
                                 <tr>
                                     <th class="p-3 w-10 text-center"><i class="fas fa-check"></i></th>
-                                    <th class="p-3">ชื่องาน / ภารกิจ</th>
+                                    <th class="p-3">ชื่อกิจกรรม</th>
                                     <th class="p-3">วันที่ดำเนินการ</th>
                                     <th class="p-3">เวลา</th>
                                     <th class="p-3">ระดับความสำคัญ</th>
@@ -197,7 +197,7 @@
     <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-fade-in flex flex-col max-h-[90vh]">
             <div class="bg-wmkRed text-white px-5 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg flex items-center gap-2" id="modalTitle"><i class="fas fa-plus-circle"></i> สร้างงานใหม่</h3>
+                <h3 class="font-bold text-lg flex items-center gap-2" id="modalTitle"><i class="fas fa-plus-circle"></i> สร้างกิจกรรมใหม่</h3>
                 <button onclick="closeTaskModal()" class="text-white hover:text-gray-200 focus:outline-none"><i class="fas fa-times text-xl"></i></button>
             </div>
             
@@ -205,7 +205,7 @@
                 <input type="hidden" id="taskId">
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">ชื่องาน / กิจกรรมสำคัญ <span class="text-red-500">*</span></label>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">ชื่อกิจกรรม <span class="text-red-500">*</span></label>
                     <input type="text" id="taskTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="เช่น ประชุมครูประจำเดือน">
                 </div>
                 
@@ -253,7 +253,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่ภารกิจ <span class="text-red-500">*</span></label>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่กิจกรรม <span class="text-red-500">*</span></label>
                         <select id="taskCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-wmkRed outline-none h-9 text-sm">
                         </select>
                     </div>
@@ -572,7 +572,7 @@
         async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
             if(pwd !== 'wmk' && pwd !== 'Wmk') {
-                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
+                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่านเพื่อบันทึกข้อมูล' });
                 return;
             }
 
@@ -665,9 +665,9 @@
         function deleteTask(id) {
             Swal.fire({
                 title: 'ยืนยันการลบ?',
-                text: "ลบแล้วไม่สามารถกู้คืนได้ (ต้องใส่รหัส wmk)",
+                text: "ลบแล้วไม่สามารถกู้คืนได้",
                 input: 'password',
-                inputPlaceholder: 'รหัสผ่าน (wmk)',
+                inputPlaceholder: 'รหัสผ่าน',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#D32F2F',
