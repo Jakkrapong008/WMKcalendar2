@@ -604,7 +604,7 @@
         async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
             if(pwd !== 'wmk' && pwd !== 'Wmk') {
-                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
+                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่านเพื่อบันทึกข้อมูล' });
                 return;
             }
 
@@ -659,7 +659,7 @@
             
             const { value: password } = await Swal.fire({
                 title: 'ยืนยันการเปลี่ยนสถานะ',
-                text: "กรุณากรอกรหัสผ่าน (wmk)",
+                text: "กรุณากรอกรหัสผ่าน",
                 input: 'password',
                 inputPlaceholder: 'รหัสผ่าน',
                 icon: 'warning',
