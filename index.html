@@ -357,7 +357,7 @@
                 <!-- Security -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">รหัสผ่านยืนยันการบันทึก <span class="text-red-500">*</span></label>
-                    <input type="password" id="taskPassword" class="w-full border border-red-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none bg-red-50" placeholder="ใส่รหัสผ่านเพื่อบันทึกงาน (wmk)">
+                    <input type="password" id="taskPassword" class="w-full border border-red-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none bg-red-50" placeholder="">
                 </div>
 
             </div>
@@ -373,6 +373,26 @@
     <!-- JavaScript Application Logic -->
     <script>
         // ==========================================
+        // API CONFIGURATION (สำหรับคุยกับ Google Apps Script)
+        // ==========================================
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxoJBjHrXfmD5roMjg2A_WV3nq9nSkaAuy9senxbwqrR25OGzEC9yFZdsN1D8vYLOg5/exec";
+
+        async function apiCall(action, payload = {}) {
+            try {
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: action, data: payload }),
+                    // ใช้ text/plain เพื่อหลีกเลี่ยงปัญหา CORS Preflight ในเบราว์เซอร์
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+                });
+                return await response.json();
+            } catch (error) {
+                console.error("API Error:", error);
+                throw error;
+            }
+        }
+
+        // ==========================================
         // APP STATE
         // ==========================================
         let appState = {
@@ -386,21 +406,57 @@
         // ==========================================
         // INITIALIZATION
         // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // วันที่แสดงบน Header
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('currentDateDisplay').textContent = new Date().toLocaleDateString('th-TH', options);
             
-            // โหลดข้อมูล (เชื่อมต่อกับ Google Apps Script ของจริง)
             Swal.fire({ title: 'กำลังโหลดข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-            google.script.run.withSuccessHandler((data) => {
+            
+            try {
+                const data = await apiCall('getInitialData');
                 Swal.close();
                 initApp(data);
-            }).getInitialData();
+            } catch (error) {
+                Swal.fire({ icon: 'error', title: 'ข้อผิดพลาดระบบ', text: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง' });
+            }
         });
 
         function initApp(data) {
-            appState.tasks = data.tasks || [];
+            // ฟังก์ชันช่วยสกัดเฉพาะเวลา HH:mm จาก ISO String และแปลง Timezone ให้ตรงกับไทย
+            const extractTime = (val) => {
+                if (!val) return '';
+                if (typeof val === 'string') {
+                    // ถ้าข้อมูลมีรูปแบบเป็น ISO Date (มี T และ Z) ให้แปลงกลับเป็นเวลา Local ของเครื่อง
+                    if (val.includes('T') && val.includes('Z')) {
+                        const d = new Date(val);
+                        // ถ้าวันที่ไม่ Invalid (เช็กจาก Time)
+                        if (!isNaN(d.getTime())) {
+                            return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+                        }
+                    }
+                    // รูปแบบเดิมกรณีเป็น String ธรรมดา
+                    const match = val.match(/T(\d{2}:\d{2})/);
+                    if (match) return match[1]; 
+                }
+                return String(val); // คืนค่าเดิมถ้าไม่ใช่รูปแบบที่ดักไว้ (เช่น 15:24 ที่กรอกตรงๆ)
+            };
+
+            // แปลงคีย์ของ Object ให้ตรงกับตัวแปรที่ใช้ (ดักจับทั้งกรณีที่ชีตส่งมาเป็นตัวใหญ่และตัวเล็ก)
+            appState.tasks = (data.tasks || []).map(t => ({
+                id: t.ID !== undefined ? t.ID : t.id,
+                title: t.Title !== undefined ? t.Title : t.title,
+                description: t.Description !== undefined ? t.Description : t.description,
+                date: t.Date !== undefined ? t.Date : t.date,
+                startTime: extractTime(t.StartTime !== undefined ? t.StartTime : t.startTime),
+                endTime: extractTime(t.EndTime !== undefined ? t.EndTime : t.endTime),
+                priority: t.Priority !== undefined ? t.Priority : t.priority,
+                category: t.Category !== undefined ? t.Category : t.category,
+                status: t.Status !== undefined ? t.Status : t.status,
+                reminder1_dt: t.Reminder1_DateTime !== undefined ? t.Reminder1_DateTime : t.reminder1_dt,
+                reminder2_dt: t.Reminder2_DateTime !== undefined ? t.Reminder2_DateTime : t.reminder2_dt
+            }));
+            
             appState.categories = data.categories || [];
             document.getElementById('visitorCountDisplay').innerText = data.visitorCount || 1;
             
@@ -429,7 +485,6 @@
         }
 
         function updateKPIs() {
-            // ปรับให้อิงตาม Timezone ของเครื่องเวลาเช็ก
             const todayDateObj = new Date();
             const todayStr = todayDateObj.getFullYear() + "-" + String(todayDateObj.getMonth() + 1).padStart(2, '0') + "-" + String(todayDateObj.getDate()).padStart(2, '0');
             
@@ -462,7 +517,6 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
             
-            // Fill empty slots
             for(let i = 0; i < firstDay; i++) {
                 grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
             }
@@ -476,11 +530,9 @@
                 let isToday = cellDateStr === todayStr;
                 let isSelected = cellDateStr === selectedStr;
                 
-                // Find tasks for this day
                 let dayTasks = appState.tasks.filter(t => t.date && t.date.substring(0,10) === cellDateStr);
                 let taskHtml = '';
                 
-                // Show max 3 dots/badges
                 dayTasks.slice(0, 3).forEach(t => {
                     let catColor = appState.categories.find(c => c.name === t.category)?.color || '#999';
                     let doneStrike = t.status === 'เสร็จสิ้น' ? 'line-through opacity-50' : '';
@@ -499,7 +551,6 @@
                 `;
             }
             
-            // Fill remaining empty
             let totalCells = firstDay + daysInMonth;
             while(totalCells % 7 !== 0) {
                 grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
@@ -515,10 +566,9 @@
         }
 
         function selectDate(dateStr) {
-            // เมื่อคลิกปฏิทิน ให้สร้าง Date Object แบบบังคับเวลาเที่ยงคืน เพื่อไม่ให้ Timezone เคลื่อน
             const parts = dateStr.split('-');
             appState.selectedDate = new Date(parts[0], parts[1]-1, parts[2]);
-            renderCalendar(); // Re-render to highlight selected
+            renderCalendar();
         }
 
         function renderDailyTasks() {
@@ -544,6 +594,9 @@
                 let catColor = appState.categories.find(c => c.name === t.category)?.color || '#999';
                 let isDone = t.status === 'เสร็จสิ้น';
                 
+                // รูปแบบการแสดงผลเวลาเป็น HH.mm น.
+                let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
+                
                 list.innerHTML += `
                     <div class="border rounded-lg p-3 flex gap-3 hover-card bg-white relative overflow-hidden group ${isDone ? 'opacity-60 bg-gray-50' : ''}">
                         <div class="w-1.5 absolute left-0 top-0 bottom-0" style="background-color: ${catColor}"></div>
@@ -553,7 +606,7 @@
                         <div class="flex-1 cursor-pointer" onclick="editTask('${t.id}')">
                             <h4 class="font-bold text-sm text-gray-800 ${isDone ? 'line-through' : ''}">${t.title}</h4>
                             <div class="flex gap-3 text-xs text-gray-500 mt-1">
-                                <span><i class="far fa-clock"></i> ${t.startTime || '-'}</span>
+                                <span><i class="far fa-clock"></i> ${displayTime}</span>
                                 <span style="color: ${catColor}" class="font-medium bg-gray-100 px-1.5 rounded">${t.category}</span>
                             </div>
                         </div>
@@ -566,37 +619,44 @@
         // TASK CRUD (CREATE, READ, UPDATE, DELETE)
         // ==========================================
         function openTaskModal(taskId = null) {
-            document.getElementById('taskPassword').value = ''; // Reset password field
+            document.getElementById('taskPassword').value = ''; 
             
             if (taskId) {
                 document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขงาน';
-                const t = appState.tasks.find(x => x.id === taskId);
-                document.getElementById('taskId').value = t.id;
-                document.getElementById('taskTitle').value = t.title;
-                document.getElementById('taskDesc').value = t.description;
-                document.getElementById('taskDate').value = t.date ? t.date.substring(0,10) : '';
-                document.getElementById('taskStartTime').value = t.startTime;
-                document.getElementById('taskEndTime').value = t.endTime;
+                // แก้ไข: แปลงชนิดข้อมูลเป็น String ทั้งสองฝั่ง เพื่อให้หา ID เจอเสมอ
+                const t = appState.tasks.find(x => String(x.id) === String(taskId));
                 
-                let priorityRadio = document.querySelector(`input[name="priority"][value="${t.priority}"]`);
-                if(priorityRadio) priorityRadio.checked = true;
-                
-                document.getElementById('taskCategory').value = t.category;
-                
-                // Set reminders if exist
-                if(t.reminder1_dt) { 
-                    let d = new Date(t.reminder1_dt); 
-                    document.getElementById('rem1Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
-                    document.getElementById('rem1Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
-                } else { 
-                    document.getElementById('rem1Date').value = ''; document.getElementById('rem1Time').value = ''; 
-                }
-                if(t.reminder2_dt) { 
-                    let d = new Date(t.reminder2_dt); 
-                    document.getElementById('rem2Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
-                    document.getElementById('rem2Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
-                } else { 
-                    document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = ''; 
+                if (t) {
+                    document.getElementById('taskId').value = t.id;
+                    document.getElementById('taskTitle').value = t.title || '';
+                    document.getElementById('taskDesc').value = t.description || '';
+                    document.getElementById('taskDate').value = t.date ? t.date.substring(0,10) : '';
+                    document.getElementById('taskStartTime').value = t.startTime || '';
+                    document.getElementById('taskEndTime').value = t.endTime || '';
+                    
+                    let priorityRadio = document.querySelector(`input[name="priority"][value="${t.priority}"]`);
+                    if(priorityRadio) priorityRadio.checked = true;
+                    
+                    document.getElementById('taskCategory').value = t.category || '';
+                    
+                    if(t.reminder1_dt) { 
+                        let d = new Date(t.reminder1_dt); 
+                        if (!isNaN(d.getTime())) {
+                            document.getElementById('rem1Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+                            document.getElementById('rem1Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
+                        }
+                    } else { 
+                        document.getElementById('rem1Date').value = ''; document.getElementById('rem1Time').value = ''; 
+                    }
+                    if(t.reminder2_dt) { 
+                        let d = new Date(t.reminder2_dt); 
+                        if (!isNaN(d.getTime())) {
+                            document.getElementById('rem2Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+                            document.getElementById('rem2Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
+                        }
+                    } else { 
+                        document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = ''; 
+                    }
                 }
 
             } else {
@@ -621,7 +681,7 @@
             document.getElementById('taskModal').classList.add('hidden');
         }
 
-        function saveTask() {
+        async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
             if(pwd !== 'wmk' && pwd !== 'Wmk') {
                 Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
@@ -637,7 +697,6 @@
 
             Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
-            // Prepare Reminder Datetimes
             let r1d = document.getElementById('rem1Date').value, r1t = document.getElementById('rem1Time').value;
             let r2d = document.getElementById('rem2Date').value, r2t = document.getElementById('rem2Time').value;
             let rem1_dt = (r1d && r1t) ? `${r1d}T${r1t}:00` : '';
@@ -658,28 +717,33 @@
                 password: pwd
             };
 
-            // เรียกใช้ GAS CALL
-            google.script.run.withSuccessHandler((res) => {
+            try {
+                const res = await apiCall('saveTask', taskData);
                 if(res.status === 'success'){
                     Swal.fire({ icon: 'success', title: 'บันทึกสำเร็จ', showConfirmButton: false, timer: 1500 });
                     closeTaskModal();
-                    // โหลดข้อมูลใหม่
-                    google.script.run.withSuccessHandler(initApp).getInitialData();
+                    const newData = await apiCall('getInitialData');
+                    initApp(newData);
                 } else {
                     Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: res.message });
                 }
-            }).saveTask(taskData);
+            } catch (error) {
+                Swal.fire({ icon: 'error', title: 'บันทึกล้มเหลว', text: error.message });
+            }
         }
 
-        function toggleTaskStatus(id) {
+        async function toggleTaskStatus(id) {
             const task = appState.tasks.find(t => t.id === id);
             if(task) {
                 Swal.fire({ title: 'กำลังอัปเดต...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-                // เรียกใช้ GAS CALL เพื่อสลับสถานะ
-                google.script.run.withSuccessHandler(() => {
+                try {
+                    await apiCall('toggleTaskStatus', { id: id, currentStatus: task.status });
                     Swal.close();
-                    google.script.run.withSuccessHandler(initApp).getInitialData();
-                }).toggleTaskStatus(id, task.status);
+                    const newData = await apiCall('getInitialData');
+                    initApp(newData);
+                } catch (error) {
+                    Swal.fire({ icon: 'error', title: 'อัปเดตล้มเหลว', text: error.message });
+                }
             }
         }
 
@@ -697,18 +761,22 @@
                 showCancelButton: true,
                 confirmButtonColor: '#D32F2F',
                 confirmButtonText: 'ลบข้อมูล'
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
                     if(result.value !== 'wmk' && result.value !== 'Wmk'){
                          Swal.fire('รหัสผ่านผิด', '', 'error'); return;
                     }
                     
                     Swal.fire({ title: 'กำลังลบข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-                    // เรียกใช้ GAS CALL เพื่อลบข้อมูล
-                    google.script.run.withSuccessHandler(() => { 
+                    
+                    try {
+                        await apiCall('deleteTask', { id: id });
                         Swal.fire('ลบแล้ว!', '', 'success');
-                        google.script.run.withSuccessHandler(initApp).getInitialData(); 
-                    }).deleteTask(id);
+                        const newData = await apiCall('getInitialData');
+                        initApp(newData);
+                    } catch (error) {
+                        Swal.fire({ icon: 'error', title: 'ลบล้มเหลว', text: error.message });
+                    }
                 }
             })
         }
@@ -724,7 +792,7 @@
             
             let filtered = appState.tasks.filter(t => {
                 let match = true;
-                if(search && !t.title.toLowerCase().includes(search)) match = false;
+                if(search && (!t.title || !t.title.toLowerCase().includes(search))) match = false;
                 if(status && t.status !== status) match = false;
                 if(priority && t.priority !== priority) match = false;
                 if(category && t.category !== category) match = false;
@@ -741,20 +809,28 @@
                 
                 let thDate = "-";
                 if(t.date) {
-                    let d = new Date(t.date);
-                    thDate = d.toLocaleDateString('th-TH');
+                    // ป้องกัน Error เวลาสร้าง Date Object กรณี Date String มาแบบไม่สมบูรณ์
+                    try {
+                        let d = new Date(t.date.substring(0,10));
+                        thDate = d.toLocaleDateString('th-TH');
+                    } catch (e) {
+                        thDate = t.date;
+                    }
                 }
+                
+                // รูปแบบการแสดงผลเวลาเป็น HH.mm น. ในตาราง
+                let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50 transition ${isDone ? 'bg-gray-50 text-gray-400' : ''}">
                         <td class="p-3 text-center">
                             <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${t.id}')" class="w-4 h-4 text-wmkRed rounded">
                         </td>
-                        <td class="p-3 font-medium ${isDone ? 'line-through' : 'text-gray-800'}">${t.title}</td>
+                        <td class="p-3 font-medium ${isDone ? 'line-through' : 'text-gray-800'}">${t.title || ''}</td>
                         <td class="p-3">${thDate}</td>
-                        <td class="p-3">${t.startTime || '-'}</td>
-                        <td class="p-3">${pIcon} ${t.priority}</td>
-                        <td class="p-3"><span class="px-2 py-1 rounded text-white text-xs" style="background-color: ${catColor}">${t.category}</span></td>
+                        <td class="p-3">${displayTime}</td>
+                        <td class="p-3">${pIcon} ${t.priority || ''}</td>
+                        <td class="p-3"><span class="px-2 py-1 rounded text-white text-xs" style="background-color: ${catColor}">${t.category || ''}</span></td>
                         <td class="p-3 text-center space-x-2">
                             <button onclick="editTask('${t.id}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded"><i class="fas fa-edit"></i></button>
                             <button onclick="deleteTask('${t.id}')" class="text-red-500 hover:bg-red-50 p-1.5 rounded"><i class="fas fa-trash-alt"></i></button>
