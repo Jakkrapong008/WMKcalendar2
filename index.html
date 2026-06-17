@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ปฏิทินการปฏิบัติงาน โรงเรียนวัดแม่กะ</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Sarabun -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -31,22 +27,15 @@
     </script>
     <style>
         body { background-color: #F8F9FA; overflow-x: hidden; }
-        /* Animations */
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .hover-card { transition: all 0.3s ease; }
         .hover-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #D32F2F; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #B71C1C; }
-
-        /* Sidebar active state */
         .nav-item.active { background-color: rgba(255, 255, 255, 0.15); border-left: 4px solid #FBC02D; font-weight: 600; }
-        
-        /* Calendar styling */
         .calendar-day { min-height: 80px; transition: 0.2s; cursor: pointer; }
         .calendar-day:hover { background-color: #FFF9C4; }
         .today-mark { background-color: #D32F2F; color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; }
@@ -54,7 +43,6 @@
 </head>
 <body class="flex h-screen text-gray-800">
 
-    <!-- Sidebar -->
     <aside class="w-64 bg-wmkRed text-white flex flex-col shadow-xl z-20 flex-shrink-0 transition-transform duration-300" id="sidebar">
         <div class="p-5 flex items-center gap-3 border-b border-red-700">
             <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-12 h-12 bg-white rounded-full p-1 shadow">
@@ -84,9 +72,7 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden bg-bgSoft relative">
-        <!-- Top Header Mobile Toggle -->
         <header class="bg-white shadow-sm p-4 flex justify-between items-center md:hidden">
             <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-8 h-8">
             <button onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" class="text-wmkRed text-xl focus:outline-none">
@@ -94,12 +80,9 @@
             </button>
         </header>
 
-        <!-- Scrollable Content Area -->
         <div class="flex-1 overflow-y-auto p-4 md:p-8 w-full relative">
             
-            <!-- VIEW: DASHBOARD -->
             <div id="view-dashboard" class="fade-in space-y-6">
-                <!-- Header -->
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl shadow-sm border-l-4 border-wmkRed">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมงาน</h2>
@@ -110,7 +93,6 @@
                     </div>
                 </div>
 
-                <!-- KPI Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-gradient-to-r from-blue-500 to-blue-400 rounded-xl p-5 text-white shadow hover-card relative overflow-hidden">
                         <i class="fas fa-calendar-day absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
@@ -132,9 +114,7 @@
                     </div>
                 </div>
 
-                <!-- Calendar & Today Tasks -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Calendar Section -->
                     <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-5">
                         <div class="flex justify-between items-center mb-4">
                             <div class="flex items-center gap-4">
@@ -151,25 +131,19 @@
                         <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-gray-500 mb-2">
                             <div class="text-red-500">อา.</div><div>จ.</div><div>อ.</div><div>พ.</div><div>พฤ.</div><div>ศ.</div><div class="text-wmkRed">ส.</div>
                         </div>
-                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200">
-                            <!-- Calendar Cells Generated by JS -->
-                        </div>
+                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200"></div>
                     </div>
 
-                    <!-- Today Tasks List -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col h-[500px]">
                         <div class="flex justify-between items-center mb-4 border-b pb-2">
                             <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>งานที่เลือกวันนี้</h3>
                             <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full" id="selectedDateText"></span>
                         </div>
-                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList">
-                            <!-- Tasks injected here -->
-                        </div>
+                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW: TASK LIBRARY -->
             <div id="view-library" class="hidden fade-in space-y-6">
                 <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-wmkYellow">
                     <div class="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
@@ -177,7 +151,6 @@
                         <button onclick="openTaskModal()" class="px-4 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-2"></i>เพิ่มงานใหม่</button>
                     </div>
 
-                    <!-- Filters -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
                         <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่องาน..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onkeyup="renderTable()">
                         <select id="filterStatus" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
@@ -193,11 +166,9 @@
                         </select>
                         <select id="filterCategory" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
                             <option value="">ทุกหมวดหมู่</option>
-                            <!-- categories injected via JS -->
                         </select>
                     </div>
 
-                    <!-- Table -->
                     <div class="overflow-x-auto rounded-lg border border-gray-200">
                         <table class="w-full text-left text-sm whitespace-nowrap">
                             <thead class="bg-gray-800 text-white">
@@ -211,22 +182,17 @@
                                     <th class="p-3 text-center">จัดการ</th>
                                 </tr>
                             </thead>
-                            <tbody id="taskTableBody" class="divide-y divide-gray-200">
-                                <!-- Table rows injected here -->
-                            </tbody>
+                            <tbody id="taskTableBody" class="divide-y divide-gray-200"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW: SETTINGS -->
             <div id="view-settings" class="hidden fade-in space-y-6">
                  <h2 class="text-xl font-bold text-gray-800 border-l-4 border-wmkRed pl-3">ตั้งค่าระบบ</h2>
                  
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <!-- Category Settings -->
                      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 opacity-50 relative pointer-events-none">
-                         <!-- ปิดการใช้งานหน้าเว็บชั่วคราว เพราะยังไม่ได้เขียน GAS Save Category ให้ไปเพิ่มใน Sheets แทนก่อน -->
                          <div class="absolute inset-0 z-10 flex items-center justify-center bg-white bg-opacity-70">
                              <span class="bg-gray-800 text-white text-xs px-3 py-1 rounded font-bold">เพิ่ม/แก้ไขหมวดหมู่ได้ที่ Google Sheets ชีต Categories</span>
                          </div>
@@ -238,7 +204,6 @@
                          </div>
                      </div>
 
-                     <!-- LINE Settings -->
                      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
                         <h3 class="font-bold text-gray-800 mb-4 flex items-center"><i class="fab fa-line text-green-500 mr-2"></i>การตั้งค่า LINE Reminder</h3>
                         <div class="space-y-4">
@@ -263,20 +228,16 @@
                     </div>
                  </div>
             </div>
-
         </div>
     </main>
 
-    <!-- MODAL: CREATE / EDIT TASK -->
     <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-fade-in flex flex-col max-h-[90vh]">
-            <!-- Modal Header -->
             <div class="bg-wmkRed text-white px-5 py-4 flex justify-between items-center">
                 <h3 class="font-bold text-lg flex items-center gap-2" id="modalTitle"><i class="fas fa-plus-circle"></i> สร้างงานใหม่</h3>
                 <button onclick="closeTaskModal()" class="text-white hover:text-gray-200 focus:outline-none"><i class="fas fa-times text-xl"></i></button>
             </div>
             
-            <!-- Modal Body (Scrollable) -->
             <div class="p-5 overflow-y-auto flex-1 space-y-4">
                 <input type="hidden" id="taskId">
                 
@@ -325,17 +286,13 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่ภารกิจ <span class="text-red-500">*</span></label>
-                        <select id="taskCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-wmkRed outline-none h-9 text-sm">
-                            <!-- Injected by JS -->
-                        </select>
+                        <select id="taskCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-wmkRed outline-none h-9 text-sm"></select>
                     </div>
                 </div>
 
-                <!-- LINE Reminder Settings -->
                 <div class="bg-green-50 border border-green-200 rounded-xl p-4">
                     <h4 class="text-sm font-bold text-green-800 flex items-center mb-3"><i class="fab fa-line text-lg mr-2 text-green-500"></i> ตั้งค่าการแจ้งเตือน LINE (สูงสุด 2 ครั้ง)</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- ครั้งที่ 1 -->
                         <div class="bg-white p-3 rounded-lg border border-green-100 shadow-sm">
                             <label class="block text-xs font-bold text-gray-600 mb-2">แจ้งเตือนครั้งที่ 1</label>
                             <div class="flex gap-2">
@@ -343,7 +300,6 @@
                                 <input type="time" id="rem1Time" class="w-2/5 border border-gray-300 rounded p-1 text-xs outline-none focus:border-green-500">
                             </div>
                         </div>
-                        <!-- ครั้งที่ 2 -->
                         <div class="bg-white p-3 rounded-lg border border-green-100 shadow-sm">
                             <label class="block text-xs font-bold text-gray-600 mb-2">แจ้งเตือนครั้งที่ 2</label>
                             <div class="flex gap-2">
@@ -354,7 +310,6 @@
                     </div>
                 </div>
                 
-                <!-- Security -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">รหัสผ่านยืนยันการบันทึก <span class="text-red-500">*</span></label>
                     <input type="password" id="taskPassword" class="w-full border border-red-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none bg-red-50" placeholder="">
@@ -362,7 +317,6 @@
 
             </div>
 
-            <!-- Modal Footer -->
             <div class="bg-gray-50 px-5 py-4 border-t flex justify-end gap-3">
                 <button onclick="closeTaskModal()" class="px-4 py-2 text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 text-sm font-medium">ยกเลิก</button>
                 <button onclick="saveTask()" class="px-5 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark shadow-md flex items-center text-sm font-medium"><i class="fas fa-save mr-2"></i> บันทึกรายการ</button>
@@ -370,11 +324,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Application Logic -->
     <script>
-        // ==========================================
-        // API CONFIGURATION (สำหรับคุยกับ Google Apps Script)
-        // ==========================================
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxoJBjHrXfmD5roMjg2A_WV3nq9nSkaAuy9senxbwqrR25OGzEC9yFZdsN1D8vYLOg5/exec";
 
         async function apiCall(action, payload = {}) {
@@ -382,7 +332,6 @@
                 const response = await fetch(GAS_API_URL, {
                     method: 'POST',
                     body: JSON.stringify({ action: action, data: payload }),
-                    // ใช้ text/plain เพื่อหลีกเลี่ยงปัญหา CORS Preflight ในเบราว์เซอร์
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
                 });
                 return await response.json();
@@ -392,9 +341,6 @@
             }
         }
 
-        // ==========================================
-        // APP STATE
-        // ==========================================
         let appState = {
             visitorCount: 0,
             currentDate: new Date(),
@@ -403,11 +349,7 @@
             tasks: []
         };
 
-        // ==========================================
-        // INITIALIZATION
-        // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
-            // วันที่แสดงบน Header
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('currentDateDisplay').textContent = new Date().toLocaleDateString('th-TH', options);
             
@@ -423,26 +365,21 @@
         });
 
         function initApp(data) {
-            // ฟังก์ชันช่วยสกัดเฉพาะเวลา HH:mm จาก ISO String และแปลง Timezone ให้ตรงกับไทย
             const extractTime = (val) => {
                 if (!val) return '';
                 if (typeof val === 'string') {
-                    // ถ้าข้อมูลมีรูปแบบเป็น ISO Date (มี T และ Z) ให้แปลงกลับเป็นเวลา Local ของเครื่อง
                     if (val.includes('T') && val.includes('Z')) {
                         const d = new Date(val);
-                        // ถ้าวันที่ไม่ Invalid (เช็กจาก Time)
                         if (!isNaN(d.getTime())) {
                             return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
                         }
                     }
-                    // รูปแบบเดิมกรณีเป็น String ธรรมดา
                     const match = val.match(/T(\d{2}:\d{2})/);
                     if (match) return match[1]; 
                 }
-                return String(val); // คืนค่าเดิมถ้าไม่ใช่รูปแบบที่ดักไว้ (เช่น 15:24 ที่กรอกตรงๆ)
+                return String(val);
             };
 
-            // แปลงคีย์ของ Object ให้ตรงกับตัวแปรที่ใช้ (ดักจับทั้งกรณีที่ชีตส่งมาเป็นตัวใหญ่และตัวเล็ก)
             appState.tasks = (data.tasks || []).map(t => ({
                 id: t.ID !== undefined ? t.ID : t.id,
                 title: t.Title !== undefined ? t.Title : t.title,
@@ -466,9 +403,6 @@
             updateKPIs();
         }
 
-        // ==========================================
-        // UI & NAVIGATION
-        // ==========================================
         function switchView(viewId) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`nav-${viewId}`).classList.add('active');
@@ -501,19 +435,14 @@
             document.getElementById('kpi-done').innerText = done;
         }
 
-        // ==========================================
-        // CALENDAR LOGIC
-        // ==========================================
         function renderCalendar() {
             const year = appState.currentDate.getFullYear();
             const month = appState.currentDate.getMonth();
-            
             const monthNames = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             document.getElementById('calendarMonthYear').innerText = `${monthNames[month]} ${year + 543}`;
             
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
-            
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
             
@@ -529,7 +458,6 @@
                 let cellDateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                 let isToday = cellDateStr === todayStr;
                 let isSelected = cellDateStr === selectedStr;
-                
                 let dayTasks = appState.tasks.filter(t => t.date && t.date.substring(0,10) === cellDateStr);
                 let taskHtml = '';
                 
@@ -556,7 +484,6 @@
                 grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
                 totalCells++;
             }
-            
             renderDailyTasks();
         }
 
@@ -593,15 +520,13 @@
             tasks.forEach(t => {
                 let catColor = appState.categories.find(c => c.name === t.category)?.color || '#999';
                 let isDone = t.status === 'เสร็จสิ้น';
-                
-                // รูปแบบการแสดงผลเวลาเป็น HH.mm น.
                 let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
                 
                 list.innerHTML += `
                     <div class="border rounded-lg p-3 flex gap-3 hover-card bg-white relative overflow-hidden group ${isDone ? 'opacity-60 bg-gray-50' : ''}">
                         <div class="w-1.5 absolute left-0 top-0 bottom-0" style="background-color: ${catColor}"></div>
                         <div class="flex items-center pl-2">
-                            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${t.id}')" class="w-5 h-5 text-wmkRed rounded border-gray-300 focus:ring-wmkRed cursor-pointer">
+                            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus(this, '${t.id}')" class="w-5 h-5 text-wmkRed rounded border-gray-300 focus:ring-wmkRed cursor-pointer">
                         </div>
                         <div class="flex-1 cursor-pointer" onclick="editTask('${t.id}')">
                             <h4 class="font-bold text-sm text-gray-800 ${isDone ? 'line-through' : ''}">${t.title}</h4>
@@ -615,15 +540,11 @@
             });
         }
 
-        // ==========================================
-        // TASK CRUD (CREATE, READ, UPDATE, DELETE)
-        // ==========================================
         function openTaskModal(taskId = null) {
             document.getElementById('taskPassword').value = ''; 
             
             if (taskId) {
                 document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขงาน';
-                // แก้ไข: แปลงชนิดข้อมูลเป็น String ทั้งสองฝั่ง เพื่อให้หา ID เจอเสมอ
                 const t = appState.tasks.find(x => String(x.id) === String(taskId));
                 
                 if (t) {
@@ -658,7 +579,6 @@
                         document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = ''; 
                     }
                 }
-
             } else {
                 document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างงานใหม่';
                 document.getElementById('taskId').value = '';
@@ -732,8 +652,33 @@
             }
         }
 
-        async function toggleTaskStatus(id) {
-            const task = appState.tasks.find(t => t.id === id);
+        // อัปเดต: เพิ่มการเรียกขอรหัสผ่านก่อนเปลี่ยนสถานะ Checkbox
+        async function toggleTaskStatus(checkboxElement, id) {
+            // สำรองค่าเดิมไว้ก่อน ถ้ายกเลิกจะได้เปลี่ยนกลับถูก
+            const isChecked = checkboxElement.checked;
+            
+            const { value: password } = await Swal.fire({
+                title: 'ยืนยันการเปลี่ยนสถานะ',
+                text: "กรุณากรอกรหัสผ่าน (wmk)",
+                input: 'password',
+                inputPlaceholder: 'รหัสผ่าน',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#D32F2F',
+                cancelButtonText: 'ยกเลิก',
+                confirmButtonText: 'ยืนยัน'
+            });
+
+            if (password !== 'wmk' && password !== 'Wmk') {
+                if (password !== undefined) { // กรณีพิมพ์รหัสผิด
+                    Swal.fire('รหัสผ่านผิด', '', 'error');
+                }
+                // ถ้ากดยกเลิก หรือรหัสผิด คืนค่า Checkbox กลับไปเหมือนเดิม
+                checkboxElement.checked = !isChecked;
+                return;
+            }
+
+            const task = appState.tasks.find(t => String(t.id) === String(id));
             if(task) {
                 Swal.fire({ title: 'กำลังอัปเดต...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                 try {
@@ -742,6 +687,7 @@
                     const newData = await apiCall('getInitialData');
                     initApp(newData);
                 } catch (error) {
+                    checkboxElement.checked = !isChecked; // คืนค่าถ้าเกิด Error
                     Swal.fire({ icon: 'error', title: 'อัปเดตล้มเหลว', text: error.message });
                 }
             }
@@ -766,9 +712,7 @@
                     if(result.value !== 'wmk' && result.value !== 'Wmk'){
                          Swal.fire('รหัสผ่านผิด', '', 'error'); return;
                     }
-                    
                     Swal.fire({ title: 'กำลังลบข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-                    
                     try {
                         await apiCall('deleteTask', { id: id });
                         Swal.fire('ลบแล้ว!', '', 'success');
@@ -781,9 +725,6 @@
             })
         }
 
-        // ==========================================
-        // TABLE LOGIC (LIBRARY)
-        // ==========================================
         function renderTable() {
             const search = document.getElementById('filterSearch').value.toLowerCase();
             const status = document.getElementById('filterStatus').value;
@@ -809,22 +750,18 @@
                 
                 let thDate = "-";
                 if(t.date) {
-                    // ป้องกัน Error เวลาสร้าง Date Object กรณี Date String มาแบบไม่สมบูรณ์
                     try {
                         let d = new Date(t.date.substring(0,10));
                         thDate = d.toLocaleDateString('th-TH');
-                    } catch (e) {
-                        thDate = t.date;
-                    }
+                    } catch (e) { thDate = t.date; }
                 }
                 
-                // รูปแบบการแสดงผลเวลาเป็น HH.mm น. ในตาราง
                 let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50 transition ${isDone ? 'bg-gray-50 text-gray-400' : ''}">
                         <td class="p-3 text-center">
-                            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${t.id}')" class="w-4 h-4 text-wmkRed rounded">
+                            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus(this, '${t.id}')" class="w-4 h-4 text-wmkRed rounded">
                         </td>
                         <td class="p-3 font-medium ${isDone ? 'line-through' : 'text-gray-800'}">${t.title || ''}</td>
                         <td class="p-3">${thDate}</td>
@@ -840,9 +777,6 @@
             });
         }
 
-        // ==========================================
-        // SETTINGS LOGIC
-        // ==========================================
         function renderCategoryDropdowns() {
             let opts = '';
             appState.categories.forEach(c => { opts += `<option value="${c.name}">${c.name}</option>`; });
