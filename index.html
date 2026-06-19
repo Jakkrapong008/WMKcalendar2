@@ -51,17 +51,19 @@
 
     <header class="bg-wmkRed text-white shadow-md z-20">
         <div class="flex flex-col items-center justify-center py-5 border-b border-red-800">
-            <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-16 h-16 bg-white rounded-full p-1 shadow-lg mb-3">
-            <h1 class="text-xl font-bold leading-tight tracking-wide">ปฏิทินกิจกรรม</h1>
-            <p class="text-sm text-wmkYellowLight mt-1">โรงเรียนวัดแม่กะ</p>
+            <!-- รวมชื่อและโลโก้ไว้ตรงกลาง บรรทัดเดียว -->
+            <div class="flex items-center gap-4">
+                <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-14 h-14 bg-white rounded-full p-1 shadow-lg">
+                <h1 class="text-2xl font-bold leading-tight tracking-wide">ปฏิทินกิจกรรม โรงเรียนวัดแม่กะ</h1>
+            </div>
         </div>
         
         <nav class="flex justify-center bg-wmkRedDark overflow-x-auto">
             <a href="#" onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
-                <i class="fas fa-chart-pie"></i> ปฏิทิน
+                <i class="fas fa-chart-pie"></i> แดชบอร์ด
             </a>
             <a href="#" onclick="switchView('library')" id="nav-library" class="nav-item px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
-                <i class="fas fa-folder-open"></i> กิจกรรมทั้งหมด
+                <i class="fas fa-folder-open"></i> คลังภารกิจทั้งหมด
             </a>
             <a href="https://wmk-portal.vercel.app/" target="_blank" class="nav-item px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
                 <i class="fas fa-globe"></i> WMK-Portal
@@ -74,8 +76,8 @@
             <div id="view-dashboard" class="fade-in space-y-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl shadow-sm border-l-4 border-wmkRed">
                     <div>
-                        <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมกิจกรรม</h2>
-                        <p class="text-sm text-gray-500">ดูปฏิทิน และกิจกรรมที่ต้องทำ</p>
+                        <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมงาน</h2>
+                        <p class="text-sm text-gray-500">ดูปฏิทิน และงานที่ต้องทำ</p>
                     </div>
                     <div class="mt-3 md:mt-0 font-medium text-wmkRed">
                         <i class="far fa-calendar-alt mr-2"></i><span id="currentDateDisplay"></span>
@@ -85,7 +87,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-gradient-to-r from-blue-500 to-blue-400 rounded-xl p-5 text-white shadow hover-card relative overflow-hidden">
                         <i class="fas fa-calendar-day absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
-                        <h3 class="text-sm font-medium opacity-90">กิจกรรมวันนี้</h3>
+                        <h3 class="text-sm font-medium opacity-90">งานวันนี้</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-today">0</p>
                         <p class="text-xs mt-2 opacity-80">รายการทั้งหมดของวันนี้</p>
                     </div>
@@ -93,13 +95,13 @@
                         <i class="fas fa-clock absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
                         <h3 class="text-sm font-medium opacity-90">รอดำเนินการ</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-pending">0</p>
-                        <p class="text-xs mt-2 opacity-80">กิจกรรมที่ค้างและกำลังทำ</p>
+                        <p class="text-xs mt-2 opacity-80">งานที่ค้างและกำลังทำ</p>
                     </div>
                     <div class="bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl p-5 text-white shadow hover-card relative overflow-hidden">
                         <i class="fas fa-check-circle absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
                         <h3 class="text-sm font-medium opacity-90">เสร็จสิ้นแล้ว</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-done">0</p>
-                        <p class="text-xs mt-2 opacity-80">ปิดกิจกรรมเรียบร้อย</p>
+                        <p class="text-xs mt-2 opacity-80">ปิดงานเรียบร้อย</p>
                     </div>
                 </div>
 
@@ -113,7 +115,7 @@
                             </div>
                             <div class="flex gap-2">
                                 <button onclick="renderCalendar()" class="text-sm px-3 py-1.5 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition"><i class="fas fa-undo mr-1"></i> วันนี้</button>
-                                <button onclick="openTaskModal()" class="text-sm px-4 py-1.5 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-1"></i> เพิ่มกิจกรรมใหม่</button>
+                                <button onclick="openTaskModal()" class="text-sm px-4 py-1.5 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-1"></i> เพิ่มงานใหม่</button>
                             </div>
                         </div>
                         
@@ -126,7 +128,7 @@
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col h-[500px]">
                         <div class="flex justify-between items-center mb-4 border-b pb-2">
-                            <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>กิจกรรมที่เลือกวันนี้</h3>
+                            <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>งานที่เลือกวันนี้</h3>
                             <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full" id="selectedDateText"></span>
                         </div>
                         <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList">
@@ -138,12 +140,12 @@
             <div id="view-library" class="hidden fade-in space-y-6">
                 <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-wmkYellow">
                     <div class="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
-                        <h2 class="text-xl font-bold text-gray-800">กิจกรรมทั้งหมด</h2>
-                        <button onclick="openTaskModal()" class="px-4 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-2"></i>เพิ่มกิจกรรมใหม่</button>
+                        <h2 class="text-xl font-bold text-gray-800">คลังภารกิจทั้งหมด</h2>
+                        <button onclick="openTaskModal()" class="px-4 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-2"></i>เพิ่มงานใหม่</button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
-                        <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่อกิจกรรม..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onkeyup="renderTable()">
+                        <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่องาน..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onkeyup="renderTable()">
                         <select id="filterStatus" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
                             <option value="">ทุกสถานะการทำงาน</option>
                             <option value="รอดำเนินการ">รอดำเนินการ</option>
@@ -165,7 +167,7 @@
                             <thead class="bg-gray-800 text-white">
                                 <tr>
                                     <th class="p-3 w-10 text-center"><i class="fas fa-check"></i></th>
-                                    <th class="p-3">ชื่อกิจกรรม</th>
+                                    <th class="p-3">ชื่องาน / ภารกิจ</th>
                                     <th class="p-3">วันที่ดำเนินการ</th>
                                     <th class="p-3">เวลา</th>
                                     <th class="p-3">ระดับความสำคัญ</th>
@@ -183,29 +185,25 @@
         </div>
     </main>
     
-    <!-- Footer Counter ปรับเปลี่ยนและใช้ Tailwind ให้สวยงามเข้ากับเว็บ -->
     <footer class="bg-white py-6 text-center shadow-inner border-t mt-auto flex-shrink-0 w-full">
         <div class="max-w-7xl mx-auto px-4">
-            <p class="mb-1 text-sm text-gray-500">
-                <i class="fa-solid fa-chart-line mr-1 text-gray-400"></i> จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด 
-                <span id="viewCountDisplay" class="font-bold text-wmkRed ml-1 mr-1"><i class="fa-solid fa-spinner fa-spin fa-sm"></i></span> ครั้ง
-            </p>
-            <small class="text-xs text-gray-400">© 2026 โรงเรียนวัดแม่กะ</small>
+            <small class="text-xs text-gray-500">© 2026 โรงเรียนวัดแม่กะ</small>
         </div>
     </footer>
 
     <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-fade-in flex flex-col max-h-[90vh]">
             <div class="bg-wmkRed text-white px-5 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg flex items-center gap-2" id="modalTitle"><i class="fas fa-plus-circle"></i> สร้างกิจกรรมใหม่</h3>
+                <h3 class="font-bold text-lg flex items-center gap-2" id="modalTitle"><i class="fas fa-plus-circle"></i> สร้าง/แก้ไขงาน</h3>
                 <button onclick="closeTaskModal()" class="text-white hover:text-gray-200 focus:outline-none"><i class="fas fa-times text-xl"></i></button>
             </div>
             
             <div class="p-5 overflow-y-auto flex-1 space-y-4">
                 <input type="hidden" id="taskId">
+                <input type="hidden" id="taskLinkpic"> <!-- ซ่อนไว้เก็บลิงก์รูปเก่า -->
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">ชื่อกิจกรรม <span class="text-red-500">*</span></label>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">ชื่องาน / กิจกรรมสำคัญ <span class="text-red-500">*</span></label>
                     <input type="text" id="taskTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="เช่น ประชุมครูประจำเดือน">
                 </div>
                 
@@ -216,7 +214,7 @@
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">คำอธิบายเพิ่มเติม</label>
-                    <textarea id="taskDesc" rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="รายละเอียดกิจกรรม..."></textarea>
+                    <textarea id="taskDesc" rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="รายละเอียดงาน..."></textarea>
                 </div>
 
                 <div class="grid grid-cols-3 gap-3">
@@ -253,7 +251,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่กิจกรรม <span class="text-red-500">*</span></label>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่ภารกิจ <span class="text-red-500">*</span></label>
                         <select id="taskCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-wmkRed outline-none h-9 text-sm">
                         </select>
                     </div>
@@ -278,8 +276,35 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 2.1 เพิ่มสถานะงาน (ดึงค่ามาแสดงและเปลี่ยนได้) -->
+                <div class="mt-4 border-t pt-4">
+                    <label class="block text-xs font-bold text-gray-700 mb-2">สถานะงาน <span class="text-red-500">*</span></label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="taskStatusModal" value="รอดำเนินการ" class="w-4 h-4 text-wmkRed focus:ring-wmkRed border-gray-300" checked>
+                            <span class="text-sm text-gray-700">รอดำเนินการ</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="taskStatusModal" value="เสร็จสิ้น" class="w-4 h-4 text-green-600 focus:ring-green-500 border-gray-300">
+                            <span class="text-sm text-gray-700">เสร็จสิ้น</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 2.2 เพิ่มหัวข้อ ภาพประกอบ -->
+                <div class="mt-4 border-t pt-4">
+                    <label class="block text-xs font-bold text-gray-700 mb-1">ภาพประกอบ (อัปโหลดเข้า Drive อัตโนมัติ)</label>
+                    <input type="file" id="taskImageFile" accept="image/*" onchange="previewImage(event)" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-wmkRed hover:file:bg-red-100 cursor-pointer">
+                    
+                    <!-- ส่วนแสดงตัวอย่างภาพ -->
+                    <div id="imagePreviewContainer" class="mt-3 hidden">
+                        <p class="text-xs text-gray-500 mb-1">ตัวอย่างภาพประกอบปัจจุบัน:</p>
+                        <img id="imagePreview" src="" alt="Preview" class="max-h-48 rounded-lg border shadow-sm object-cover">
+                    </div>
+                </div>
                 
-                <div>
+                <div class="mt-4 border-t pt-4">
                     <label class="block text-xs font-bold text-gray-700 mb-1">รหัสผ่านยืนยันการบันทึก <span class="text-red-500">*</span></label>
                     <input type="password" id="taskPassword" class="w-full border border-red-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none bg-red-50" placeholder="">
                 </div>
@@ -352,6 +377,7 @@
                 id: t.ID !== undefined ? t.ID : t.id,
                 title: t.Title !== undefined ? t.Title : t.title,
                 link: t.Link !== undefined ? t.Link : t.link,
+                linkpic: t.Linkpic !== undefined ? t.Linkpic : t.linkpic, // ดึงข้อมูล linkpic
                 description: t.Description !== undefined ? t.Description : t.description,
                 date: t.Date !== undefined ? t.Date : t.date,
                 startTime: extractTime(t.StartTime !== undefined ? t.StartTime : t.startTime),
@@ -364,9 +390,6 @@
             }));
             
             appState.categories = data.categories || [];
-            
-            // อัปเดตข้อมูลผู้เข้าชมทั้งหมดไปที่ ID ใหม่ viewCountDisplay
-            document.getElementById('viewCountDisplay').innerText = data.visitorCount || 1;
             
             renderCategoryDropdowns();
             renderCalendar();
@@ -432,7 +455,7 @@
                     let doneStrike = t.status === 'เสร็จสิ้น' ? 'line-through opacity-50' : '';
                     taskHtml += `<div class="text-[10px] truncate text-left px-1 mt-1 rounded text-white ${doneStrike}" style="background-color: ${catColor}">${t.title}</div>`;
                 });
-                if(dayTasks.length > 3) taskHtml += `<div class="text-[9px] text-gray-500 text-left mt-1">+อีก ${dayTasks.length - 3} กิจกรรม</div>`;
+                if(dayTasks.length > 3) taskHtml += `<div class="text-[9px] text-gray-500 text-left mt-1">+อีก ${dayTasks.length - 3} งาน</div>`;
 
                 let dayClass = `bg-white p-1 flex flex-col calendar-day ${isSelected ? 'ring-2 ring-inset ring-wmkRed bg-red-50' : ''}`;
                 let numClass = isToday ? 'today-mark' : 'text-sm font-medium text-gray-700 w-7 h-7 flex items-center justify-center';
@@ -479,7 +502,7 @@
             });
             
             if(tasks.length === 0) {
-                list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm flex flex-col items-center"><i class="far fa-folder-open text-4xl mb-2 opacity-50"></i>ไม่มีกิจกรรมในวันนี้</div>`;
+                list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm flex flex-col items-center"><i class="far fa-folder-open text-4xl mb-2 opacity-50"></i>ไม่มีงานในวันนี้</div>`;
                 return;
             }
             
@@ -506,11 +529,37 @@
             });
         }
 
+        // แสดงพรีวิวรูปภาพที่เลือก
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const previewImage = document.getElementById('imagePreview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                // ถ้าไม่ได้เลือกไฟล์ หรือกดยกเลิก
+                if (!document.getElementById('taskLinkpic').value) {
+                    previewContainer.classList.add('hidden');
+                    previewImage.src = '';
+                } else {
+                    // กลับไปโชว์รูปเก่าถ้ามี
+                    previewImage.src = document.getElementById('taskLinkpic').value;
+                }
+            }
+        }
+
         function openTaskModal(taskId = null) {
             document.getElementById('taskPassword').value = ''; 
+            document.getElementById('taskImageFile').value = ''; // รีเซ็ตช่องเลือกไฟล์
             
             if (taskId) {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขกิจกรรม';
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขงาน';
                 const t = appState.tasks.find(x => String(x.id) === String(taskId));
                 
                 if (t) {
@@ -545,12 +594,30 @@
                     } else { 
                         document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = ''; 
                     }
+
+                    // ดึงค่าสถานะมาแสดง (ถ้าเสร็จสิ้นให้ติ๊กช่องเสร็จสิ้น)
+                    if(t.status === 'เสร็จสิ้น') {
+                        document.querySelector(`input[name="taskStatusModal"][value="เสร็จสิ้น"]`).checked = true;
+                    } else {
+                        document.querySelector(`input[name="taskStatusModal"][value="รอดำเนินการ"]`).checked = true;
+                    }
+
+                    // จัดการแสดงผลรูปภาพเดิม
+                    document.getElementById('taskLinkpic').value = t.linkpic || '';
+                    if (t.linkpic) {
+                        document.getElementById('imagePreview').src = t.linkpic;
+                        document.getElementById('imagePreviewContainer').classList.remove('hidden');
+                    } else {
+                        document.getElementById('imagePreview').src = '';
+                        document.getElementById('imagePreviewContainer').classList.add('hidden');
+                    }
                 }
             } else {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างกิจกรรมใหม่';
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างงานใหม่';
                 document.getElementById('taskId').value = '';
                 document.getElementById('taskTitle').value = '';
                 document.getElementById('taskLink').value = '';
+                document.getElementById('taskLinkpic').value = ''; // ล้างลิงก์รูป
                 document.getElementById('taskDesc').value = '';
                 
                 let selStr = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
@@ -559,8 +626,14 @@
                 document.getElementById('taskStartTime').value = '';
                 document.getElementById('taskEndTime').value = '';
                 document.querySelector(`input[name="priority"][value="ปานกลาง"]`).checked = true;
+                document.querySelector(`input[name="taskStatusModal"][value="รอดำเนินการ"]`).checked = true; // ค่าเริ่มต้นสถานะ
+                
                 document.getElementById('rem1Date').value = ''; document.getElementById('rem1Time').value = '';
                 document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = '';
+
+                // ซ่อนกรอบพรีวิวรูป
+                document.getElementById('imagePreview').src = '';
+                document.getElementById('imagePreviewContainer').classList.add('hidden');
             }
             document.getElementById('taskModal').classList.remove('hidden');
         }
@@ -572,38 +645,61 @@
         async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
             if(pwd !== 'wmk' && pwd !== 'Wmk') {
-                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่านเพื่อบันทึกข้อมูล' });
+                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
                 return;
             }
 
             const title = document.getElementById('taskTitle').value.trim();
             const date = document.getElementById('taskDate').value;
             if(!title || !date) {
-                Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่อกิจกรรมและวันที่' });
+                Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่องานและวันที่' });
                 return;
             }
 
-            Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            Swal.fire({ title: 'กำลังบันทึก...', html: 'โปรดรอสักครู่ (หากมีการอัปโหลดภาพอาจใช้เวลา 5-10 วินาที)', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
             let r1d = document.getElementById('rem1Date').value, r1t = document.getElementById('rem1Time').value;
             let r2d = document.getElementById('rem2Date').value, r2t = document.getElementById('rem2Time').value;
             let rem1_dt = (r1d && r1t) ? `${r1d}T${r1t}:00` : '';
             let rem2_dt = (r2d && r2t) ? `${r2d}T${r2t}:00` : '';
 
+            // เตรียมข้อมูลรูปภาพเพื่อส่งไป Google Drive
+            let fileInput = document.getElementById('taskImageFile');
+            let fileData = null;
+            let fileName = null;
+            let mimeType = null;
+
+            if (fileInput.files.length > 0) {
+                let file = fileInput.files[0];
+                fileName = file.name;
+                mimeType = file.type;
+                // แปลงไฟล์เป็น Base64 String เพื่อส่งผ่าน JSON API ได้
+                fileData = await new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result.split(',')[1]); 
+                    reader.readAsDataURL(file);
+                });
+            }
+
             const taskData = {
                 id: document.getElementById('taskId').value,
                 title: title,
                 link: document.getElementById('taskLink').value.trim(),
+                linkpic: document.getElementById('taskLinkpic').value.trim(), // ส่งลิงก์เดิมไปด้วย
                 description: document.getElementById('taskDesc').value,
                 date: date,
                 startTime: document.getElementById('taskStartTime').value,
                 endTime: document.getElementById('taskEndTime').value,
                 priority: document.querySelector('input[name="priority"]:checked').value,
                 category: document.getElementById('taskCategory').value,
-                status: 'รอดำเนินการ',
+                status: document.querySelector('input[name="taskStatusModal"]:checked').value, // ดึงค่าจากปุ่มสถานะใน popup
                 reminder1_dt: rem1_dt,
                 reminder2_dt: rem2_dt,
-                password: pwd
+                password: pwd,
+                // ข้อมูลสำหรับอัปโหลดภาพ
+                imageData: fileData,
+                imageName: fileName,
+                imageMimeType: mimeType
             };
 
             try {
@@ -665,9 +761,9 @@
         function deleteTask(id) {
             Swal.fire({
                 title: 'ยืนยันการลบ?',
-                text: "ลบแล้วไม่สามารถกู้คืนได้",
+                text: "ลบแล้วไม่สามารถกู้คืนได้ (ต้องใส่รหัส wmk)",
                 input: 'password',
-                inputPlaceholder: 'รหัสผ่าน',
+                inputPlaceholder: 'รหัสผ่าน (wmk)',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#D32F2F',
