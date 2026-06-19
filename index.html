@@ -139,6 +139,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+                        <!-- เปลี่ยน onkeyup เป็น oninput เพื่อให้รับภาษาไทยได้สมบูรณ์ขึ้น -->
                         <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่องาน..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" oninput="renderTable()">
                         <select id="filterStatus" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
                             <option value="">ทุกสถานะการทำงาน</option>
@@ -647,7 +648,8 @@
             
             let filtered = appState.tasks.filter(t => {
                 let match = true;
-                if(search && (!t.title || !t.title.toLowerCase().includes(search))) match = false;
+                // แก้ไขปัญหา Type Error ด้วยการแปลง t.title เป็น String ก่อนเรียกใช้ .toLowerCase()
+                if(search && (!t.title || !String(t.title).toLowerCase().includes(search))) match = false;
                 if(status && t.status !== status) match = false;
                 if(priority && t.priority !== priority) match = false;
                 if(category && t.category !== category) match = false;
