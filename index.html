@@ -38,10 +38,7 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #D32F2F; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #B71C1C; }
-        
-        /* Top Navigation styling */
         .nav-item.active { background-color: rgba(255, 255, 255, 0.15); border-bottom-color: #FBC02D; font-weight: 600; color: #FFF9C4; }
-        
         .calendar-day { min-height: 80px; transition: 0.2s; cursor: pointer; }
         .calendar-day:hover { background-color: #FFF9C4; }
         .today-mark { background-color: #D32F2F; color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; }
@@ -51,17 +48,18 @@
 
     <header class="bg-wmkRed text-white shadow-md z-20">
         <div class="flex flex-col items-center justify-center py-5 border-b border-red-800">
-            <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-16 h-16 bg-white rounded-full p-1 shadow-lg mb-3">
-            <h1 class="text-xl font-bold leading-tight tracking-wide">ปฏิทินกิจกรรม</h1>
-            <p class="text-sm text-wmkYellowLight mt-1">โรงเรียนวัดแม่กะ</p>
+            <div class="flex items-center gap-4">
+                <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-14 h-14 bg-white rounded-full p-1 shadow-lg">
+                <h1 class="text-2xl font-bold leading-tight tracking-wide">ปฏิทินกิจกรรม โรงเรียนวัดแม่กะ</h1>
+            </div>
         </div>
         
         <nav class="flex justify-center bg-wmkRedDark overflow-x-auto">
             <a href="#" onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
-                <i class="fas fa-chart-pie"></i> ปฏิทิน
+                <i class="fas fa-chart-pie"></i> แดชบอร์ด
             </a>
             <a href="#" onclick="switchView('library')" id="nav-library" class="nav-item px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
-                <i class="fas fa-folder-open"></i> กิจกรรมทั้งหมด
+                <i class="fas fa-folder-open"></i> คลังภารกิจทั้งหมด
             </a>
             <a href="https://wmk-portal.vercel.app/" target="_blank" class="nav-item px-6 py-3.5 text-sm hover:bg-white hover:bg-opacity-10 transition border-b-4 border-transparent flex items-center gap-2 whitespace-nowrap">
                 <i class="fas fa-globe"></i> WMK-Portal
@@ -74,8 +72,8 @@
             <div id="view-dashboard" class="fade-in space-y-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl shadow-sm border-l-4 border-wmkRed">
                     <div>
-                        <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมกิจกรรม</h2>
-                        <p class="text-sm text-gray-500">ดูปฏิทิน และกิจกรรมที่ต้องทำ</p>
+                        <h2 class="text-xl font-bold text-gray-800">แดชบอร์ด ภาพรวมงาน</h2>
+                        <p class="text-sm text-gray-500">ดูปฏิทิน และงานที่ต้องทำ</p>
                     </div>
                     <div class="mt-3 md:mt-0 font-medium text-wmkRed">
                         <i class="far fa-calendar-alt mr-2"></i><span id="currentDateDisplay"></span>
@@ -85,7 +83,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-gradient-to-r from-blue-500 to-blue-400 rounded-xl p-5 text-white shadow hover-card relative overflow-hidden">
                         <i class="fas fa-calendar-day absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
-                        <h3 class="text-sm font-medium opacity-90">กิจกรรมวันนี้</h3>
+                        <h3 class="text-sm font-medium opacity-90">งานวันนี้</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-today">0</p>
                         <p class="text-xs mt-2 opacity-80">รายการทั้งหมดของวันนี้</p>
                     </div>
@@ -93,13 +91,13 @@
                         <i class="fas fa-clock absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
                         <h3 class="text-sm font-medium opacity-90">รอดำเนินการ</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-pending">0</p>
-                        <p class="text-xs mt-2 opacity-80">กิจกรรมที่ค้างและกำลังทำ</p>
+                        <p class="text-xs mt-2 opacity-80">งานที่ค้างและกำลังทำ</p>
                     </div>
                     <div class="bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl p-5 text-white shadow hover-card relative overflow-hidden">
                         <i class="fas fa-check-circle absolute -right-4 -bottom-4 text-7xl opacity-20"></i>
                         <h3 class="text-sm font-medium opacity-90">เสร็จสิ้นแล้ว</h3>
                         <p class="text-4xl font-bold mt-1" id="kpi-done">0</p>
-                        <p class="text-xs mt-2 opacity-80">ปิดกิจกรรมเรียบร้อย</p>
+                        <p class="text-xs mt-2 opacity-80">ปิดงานเรียบร้อย</p>
                     </div>
                 </div>
 
@@ -113,24 +111,22 @@
                             </div>
                             <div class="flex gap-2">
                                 <button onclick="renderCalendar()" class="text-sm px-3 py-1.5 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition"><i class="fas fa-undo mr-1"></i> วันนี้</button>
-                                <button onclick="openTaskModal()" class="text-sm px-4 py-1.5 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-1"></i> เพิ่มกิจกรรมใหม่</button>
+                                <button onclick="openTaskModal()" class="text-sm px-4 py-1.5 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-1"></i> เพิ่มงานใหม่</button>
                             </div>
                         </div>
                         
                         <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-gray-500 mb-2">
                             <div class="text-red-500">อา.</div><div>จ.</div><div>อ.</div><div>พ.</div><div>พฤ.</div><div>ศ.</div><div class="text-wmkRed">ส.</div>
                         </div>
-                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200">
-                        </div>
+                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200"></div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col h-[500px]">
                         <div class="flex justify-between items-center mb-4 border-b pb-2">
-                            <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>กิจกรรมที่เลือกวันนี้</h3>
+                            <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>งานที่เลือกวันนี้</h3>
                             <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full" id="selectedDateText"></span>
                         </div>
-                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList">
-                        </div>
+                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList"></div>
                     </div>
                 </div>
             </div>
@@ -138,12 +134,12 @@
             <div id="view-library" class="hidden fade-in space-y-6">
                 <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-wmkYellow">
                     <div class="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
-                        <h2 class="text-xl font-bold text-gray-800">กิจกรรมทั้งหมด</h2>
-                        <button onclick="openTaskModal()" class="px-4 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-2"></i>เพิ่มกิจกรรมใหม่</button>
+                        <h2 class="text-xl font-bold text-gray-800">คลังภารกิจทั้งหมด</h2>
+                        <button onclick="openTaskModal()" class="px-4 py-2 bg-wmkRed text-white rounded-lg hover:bg-wmkRedDark transition shadow"><i class="fas fa-plus mr-2"></i>เพิ่มงานใหม่</button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
-                        <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่อกิจกรรม..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onkeyup="renderTable()">
+                        <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่องาน..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onkeyup="renderTable()">
                         <select id="filterStatus" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
                             <option value="">ทุกสถานะการทำงาน</option>
                             <option value="รอดำเนินการ">รอดำเนินการ</option>
@@ -165,7 +161,7 @@
                             <thead class="bg-gray-800 text-white">
                                 <tr>
                                     <th class="p-3 w-10 text-center"><i class="fas fa-check"></i></th>
-                                    <th class="p-3">ชื่อกิจกรรม</th>
+                                    <th class="p-3">ชื่องาน / ภารกิจ</th>
                                     <th class="p-3">วันที่ดำเนินการ</th>
                                     <th class="p-3">เวลา</th>
                                     <th class="p-3">ระดับความสำคัญ</th>
@@ -173,8 +169,7 @@
                                     <th class="p-3 text-center">จัดการ</th>
                                 </tr>
                             </thead>
-                            <tbody id="taskTableBody" class="divide-y divide-gray-200">
-                            </tbody>
+                            <tbody id="taskTableBody" class="divide-y divide-gray-200"></tbody>
                         </table>
                     </div>
                 </div>
@@ -183,7 +178,6 @@
         </div>
     </main>
     
-    <!-- Footer Counter ปรับเปลี่ยนและใช้ Tailwind ให้สวยงามเข้ากับเว็บ -->
     <footer class="bg-white py-6 text-center shadow-inner border-t mt-auto flex-shrink-0 w-full">
         <div class="max-w-7xl mx-auto px-4">
             <p class="mb-1 text-sm text-gray-500">
@@ -194,18 +188,21 @@
         </div>
     </footer>
 
+    <!-- MODAL -->
     <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-fade-in flex flex-col max-h-[90vh]">
             <div class="bg-wmkRed text-white px-5 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg flex items-center gap-2" id="modalTitle"><i class="fas fa-plus-circle"></i> สร้างกิจกรรมใหม่</h3>
+                <h3 class="font-bold text-lg flex items-center gap-2" id="modalTitle"><i class="fas fa-plus-circle"></i> สร้าง/แก้ไขงาน</h3>
                 <button onclick="closeTaskModal()" class="text-white hover:text-gray-200 focus:outline-none"><i class="fas fa-times text-xl"></i></button>
             </div>
             
             <div class="p-5 overflow-y-auto flex-1 space-y-4">
                 <input type="hidden" id="taskId">
+                <input type="hidden" id="taskLinkpic"> 
+                <input type="hidden" id="taskStatusHidden"> 
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">ชื่อกิจกรรม <span class="text-red-500">*</span></label>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">ชื่องาน / กิจกรรมสำคัญ <span class="text-red-500">*</span></label>
                     <input type="text" id="taskTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="เช่น ประชุมครูประจำเดือน">
                 </div>
                 
@@ -216,7 +213,7 @@
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">คำอธิบายเพิ่มเติม</label>
-                    <textarea id="taskDesc" rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="รายละเอียดกิจกรรม..."></textarea>
+                    <textarea id="taskDesc" rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none" placeholder="รายละเอียดงาน..."></textarea>
                 </div>
 
                 <div class="grid grid-cols-3 gap-3">
@@ -253,14 +250,14 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่กิจกรรม <span class="text-red-500">*</span></label>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่ภารกิจ <span class="text-red-500">*</span></label>
                         <select id="taskCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 focus:ring-2 focus:ring-wmkRed outline-none h-9 text-sm">
                         </select>
                     </div>
                 </div>
 
                 <div class="bg-green-50 border border-green-200 rounded-xl p-4">
-                    <h4 class="text-sm font-bold text-green-800 flex items-center mb-3"><i class="fab fa-line text-lg mr-2 text-green-500"></i> ตั้งค่าการแจ้งเตือน LINE (สูงสุด 2 ครั้ง)</h4>
+                    <h4 class="text-sm font-bold text-green-800 flex items-center mb-3"><i class="fab fa-line text-lg mr-2 text-green-500"></i> ตั้งค่าการแจ้งเตือน LINE</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-white p-3 rounded-lg border border-green-100 shadow-sm">
                             <label class="block text-xs font-bold text-gray-600 mb-2">แจ้งเตือนครั้งที่ 1</label>
@@ -279,11 +276,10 @@
                     </div>
                 </div>
                 
-                <div>
+                <div class="mt-4 border-t pt-4">
                     <label class="block text-xs font-bold text-gray-700 mb-1">รหัสผ่านยืนยันการบันทึก <span class="text-red-500">*</span></label>
                     <input type="password" id="taskPassword" class="w-full border border-red-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none bg-red-50" placeholder="">
                 </div>
-
             </div>
 
             <div class="bg-gray-50 px-5 py-4 border-t flex justify-end gap-3">
@@ -294,6 +290,9 @@
     </div>
 
     <script>
+        // -------------------------------------------------------------
+        // ** อย่าลืมแก้ไข URL นี้เป็นลิงก์ API ล่าสุดของคุณ **
+        // -------------------------------------------------------------
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz0OgWZkx82w4LM_6raqdfRQf1OetctZs3fvP8t_CkoGvv_mfpN5aJRrLT8cdkYAQ8/exec";
 
         async function apiCall(action, payload = {}) {
@@ -328,7 +327,7 @@
                 Swal.close();
                 initApp(data);
             } catch (error) {
-                Swal.fire({ icon: 'error', title: 'ข้อผิดพลาดระบบ', text: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง' });
+                Swal.fire({ icon: 'error', title: 'ข้อผิดพลาดระบบ', text: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้' });
             }
         });
 
@@ -338,9 +337,7 @@
                 if (typeof val === 'string') {
                     if (val.includes('T') && val.includes('Z')) {
                         const d = new Date(val);
-                        if (!isNaN(d.getTime())) {
-                            return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
-                        }
+                        if (!isNaN(d.getTime())) return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
                     }
                     const match = val.match(/T(\d{2}:\d{2})/);
                     if (match) return match[1]; 
@@ -352,6 +349,7 @@
                 id: t.ID !== undefined ? t.ID : t.id,
                 title: t.Title !== undefined ? t.Title : t.title,
                 link: t.Link !== undefined ? t.Link : t.link,
+                linkpic: t.Linkpic !== undefined ? t.Linkpic : t.linkpic,
                 description: t.Description !== undefined ? t.Description : t.description,
                 date: t.Date !== undefined ? t.Date : t.date,
                 startTime: extractTime(t.StartTime !== undefined ? t.StartTime : t.startTime),
@@ -364,8 +362,6 @@
             }));
             
             appState.categories = data.categories || [];
-            
-            // อัปเดตข้อมูลผู้เข้าชมทั้งหมดไปที่ ID ใหม่ viewCountDisplay
             document.getElementById('viewCountDisplay').innerText = data.visitorCount || 1;
             
             renderCategoryDropdowns();
@@ -377,25 +373,19 @@
         function switchView(viewId) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`nav-${viewId}`).classList.add('active');
-            
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-library').classList.add('hidden');
-            
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
         }
 
         function updateKPIs() {
-            const todayDateObj = new Date();
-            const todayStr = todayDateObj.getFullYear() + "-" + String(todayDateObj.getMonth() + 1).padStart(2, '0') + "-" + String(todayDateObj.getDate()).padStart(2, '0');
-            
+            const todayStr = new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + String(new Date().getDate()).padStart(2, '0');
             let today = 0, pending = 0, done = 0;
-            
             appState.tasks.forEach(t => {
                 if(t.date && t.date.substring(0,10) === todayStr) today++;
                 if(t.status === 'รอดำเนินการ') pending++;
                 if(t.status === 'เสร็จสิ้น') done++;
             });
-            
             document.getElementById('kpi-today').innerText = today;
             document.getElementById('kpi-pending').innerText = pending;
             document.getElementById('kpi-done').innerText = done;
@@ -412,12 +402,9 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
             
-            for(let i = 0; i < firstDay; i++) {
-                grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
-            }
+            for(let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
             
-            const todayObj = new Date();
-            const todayStr = todayObj.getFullYear() + "-" + String(todayObj.getMonth() + 1).padStart(2, '0') + "-" + String(todayObj.getDate()).padStart(2, '0');
+            const todayStr = new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + String(new Date().getDate()).padStart(2, '0');
             const selectedStr = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
 
             for(let d = 1; d <= daysInMonth; d++) {
@@ -432,7 +419,7 @@
                     let doneStrike = t.status === 'เสร็จสิ้น' ? 'line-through opacity-50' : '';
                     taskHtml += `<div class="text-[10px] truncate text-left px-1 mt-1 rounded text-white ${doneStrike}" style="background-color: ${catColor}">${t.title}</div>`;
                 });
-                if(dayTasks.length > 3) taskHtml += `<div class="text-[9px] text-gray-500 text-left mt-1">+อีก ${dayTasks.length - 3} กิจกรรม</div>`;
+                if(dayTasks.length > 3) taskHtml += `<div class="text-[9px] text-gray-500 text-left mt-1">+อีก ${dayTasks.length - 3} งาน</div>`;
 
                 let dayClass = `bg-white p-1 flex flex-col calendar-day ${isSelected ? 'ring-2 ring-inset ring-wmkRed bg-red-50' : ''}`;
                 let numClass = isToday ? 'today-mark' : 'text-sm font-medium text-gray-700 w-7 h-7 flex items-center justify-center';
@@ -446,58 +433,40 @@
             }
             
             let totalCells = firstDay + daysInMonth;
-            while(totalCells % 7 !== 0) {
-                grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
-                totalCells++;
-            }
+            while(totalCells % 7 !== 0) { grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`; totalCells++; }
             renderDailyTasks();
         }
 
-        function changeMonth(dir) {
-            appState.currentDate.setMonth(appState.currentDate.getMonth() + dir);
-            renderCalendar();
-        }
-
-        function selectDate(dateStr) {
-            const parts = dateStr.split('-');
-            appState.selectedDate = new Date(parts[0], parts[1]-1, parts[2]);
-            renderCalendar();
-        }
+        function changeMonth(dir) { appState.currentDate.setMonth(appState.currentDate.getMonth() + dir); renderCalendar(); }
+        function selectDate(dateStr) { const parts = dateStr.split('-'); appState.selectedDate = new Date(parts[0], parts[1]-1, parts[2]); renderCalendar(); }
 
         function renderDailyTasks() {
             const dateStr = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
-            const thDate = appState.selectedDate.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
-            document.getElementById('selectedDateText').innerText = thDate;
+            document.getElementById('selectedDateText').innerText = appState.selectedDate.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
             
             const list = document.getElementById('dailyTaskList');
             list.innerHTML = '';
             
-            const tasks = appState.tasks.filter(t => t.date && t.date.substring(0,10) === dateStr).sort((a,b) => {
-                let timeA = a.startTime || "24:00";
-                let timeB = b.startTime || "24:00";
-                return timeA.localeCompare(timeB);
-            });
+            const tasks = appState.tasks.filter(t => t.date && t.date.substring(0,10) === dateStr).sort((a,b) => (a.startTime||"24:00").localeCompare(b.startTime||"24:00"));
             
             if(tasks.length === 0) {
-                list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm flex flex-col items-center"><i class="far fa-folder-open text-4xl mb-2 opacity-50"></i>ไม่มีกิจกรรมในวันนี้</div>`;
+                list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm flex flex-col items-center"><i class="far fa-folder-open text-4xl mb-2 opacity-50"></i>ไม่มีงานในวันนี้</div>`;
                 return;
             }
             
             tasks.forEach(t => {
                 let catColor = appState.categories.find(c => c.name === t.category)?.color || '#999';
                 let isDone = t.status === 'เสร็จสิ้น';
-                let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
-                
                 list.innerHTML += `
                     <div class="border rounded-lg p-3 flex gap-3 hover-card bg-white relative overflow-hidden group ${isDone ? 'opacity-60 bg-gray-50' : ''}">
                         <div class="w-1.5 absolute left-0 top-0 bottom-0" style="background-color: ${catColor}"></div>
-                        <div class="flex items-center pl-2">
+                        <div class="flex items-center pl-2" onclick="event.stopPropagation()">
                             <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus(this, '${t.id}')" class="w-5 h-5 text-wmkRed rounded border-gray-300 focus:ring-wmkRed cursor-pointer">
                         </div>
                         <div class="flex-1 cursor-pointer" onclick="editTask('${t.id}')">
                             <h4 class="font-bold text-sm text-gray-800 ${isDone ? 'line-through' : ''}">${t.title}</h4>
                             <div class="flex gap-3 text-xs text-gray-500 mt-1">
-                                <span><i class="far fa-clock"></i> ${displayTime}</span>
+                                <span><i class="far fa-clock"></i> ${t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-'}</span>
                                 <span style="color: ${catColor}" class="font-medium bg-gray-100 px-1.5 rounded">${t.category}</span>
                             </div>
                         </div>
@@ -510,7 +479,7 @@
             document.getElementById('taskPassword').value = ''; 
             
             if (taskId) {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขกิจกรรม';
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขงาน';
                 const t = appState.tasks.find(x => String(x.id) === String(taskId));
                 
                 if (t) {
@@ -522,87 +491,73 @@
                     document.getElementById('taskStartTime').value = t.startTime || '';
                     document.getElementById('taskEndTime').value = t.endTime || '';
                     
-                    let priorityRadio = document.querySelector(`input[name="priority"][value="${t.priority}"]`);
-                    if(priorityRadio) priorityRadio.checked = true;
-                    
+                    let pRadio = document.querySelector(`input[name="priority"][value="${t.priority}"]`);
+                    if(pRadio) pRadio.checked = true;
                     document.getElementById('taskCategory').value = t.category || '';
                     
-                    if(t.reminder1_dt) { 
-                        let d = new Date(t.reminder1_dt); 
-                        if (!isNaN(d.getTime())) {
-                            document.getElementById('rem1Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
-                            document.getElementById('rem1Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
+                    let setRemDate = (dt, dId, tId) => {
+                        if(dt && !isNaN(new Date(dt).getTime())) {
+                            let d = new Date(dt);
+                            document.getElementById(dId).value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+                            document.getElementById(tId).value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
+                        } else {
+                            document.getElementById(dId).value = ''; document.getElementById(tId).value = ''; 
                         }
-                    } else { 
-                        document.getElementById('rem1Date').value = ''; document.getElementById('rem1Time').value = ''; 
-                    }
-                    if(t.reminder2_dt) { 
-                        let d = new Date(t.reminder2_dt); 
-                        if (!isNaN(d.getTime())) {
-                            document.getElementById('rem2Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
-                            document.getElementById('rem2Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
-                        }
-                    } else { 
-                        document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = ''; 
-                    }
+                    };
+                    setRemDate(t.reminder1_dt, 'rem1Date', 'rem1Time');
+                    setRemDate(t.reminder2_dt, 'rem2Date', 'rem2Time');
+
+                    document.getElementById('taskStatusHidden').value = t.status || 'รอดำเนินการ';
+                    document.getElementById('taskLinkpic').value = t.linkpic || '';
                 }
             } else {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างกิจกรรมใหม่';
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างงานใหม่';
                 document.getElementById('taskId').value = '';
                 document.getElementById('taskTitle').value = '';
                 document.getElementById('taskLink').value = '';
+                document.getElementById('taskLinkpic').value = ''; 
+                document.getElementById('taskStatusHidden').value = 'รอดำเนินการ';
                 document.getElementById('taskDesc').value = '';
                 
-                let selStr = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
-                document.getElementById('taskDate').value = selStr;
-                
-                document.getElementById('taskStartTime').value = '';
-                document.getElementById('taskEndTime').value = '';
+                document.getElementById('taskDate').value = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
+                document.getElementById('taskStartTime').value = ''; document.getElementById('taskEndTime').value = '';
                 document.querySelector(`input[name="priority"][value="ปานกลาง"]`).checked = true;
+                
                 document.getElementById('rem1Date').value = ''; document.getElementById('rem1Time').value = '';
                 document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = '';
             }
             document.getElementById('taskModal').classList.remove('hidden');
         }
 
-        function closeTaskModal() {
-            document.getElementById('taskModal').classList.add('hidden');
-        }
+        function closeTaskModal() { document.getElementById('taskModal').classList.add('hidden'); }
 
         async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
-            if(pwd !== 'wmk' && pwd !== 'Wmk') {
-                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่านเพื่อบันทึกข้อมูล' });
-                return;
-            }
+            if(pwd !== 'wmk' && pwd !== 'Wmk') return Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
 
             const title = document.getElementById('taskTitle').value.trim();
             const date = document.getElementById('taskDate').value;
-            if(!title || !date) {
-                Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่อกิจกรรมและวันที่' });
-                return;
-            }
+            if(!title || !date) return Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่องานและวันที่' });
 
-            Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            Swal.fire({ title: 'กำลังบันทึก...', html: 'โปรดรอสักครู่...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
             let r1d = document.getElementById('rem1Date').value, r1t = document.getElementById('rem1Time').value;
             let r2d = document.getElementById('rem2Date').value, r2t = document.getElementById('rem2Time').value;
-            let rem1_dt = (r1d && r1t) ? `${r1d}T${r1t}:00` : '';
-            let rem2_dt = (r2d && r2t) ? `${r2d}T${r2t}:00` : '';
 
             const taskData = {
                 id: document.getElementById('taskId').value,
                 title: title,
                 link: document.getElementById('taskLink').value.trim(),
+                linkpic: document.getElementById('taskLinkpic').value.trim(), 
                 description: document.getElementById('taskDesc').value,
                 date: date,
                 startTime: document.getElementById('taskStartTime').value,
                 endTime: document.getElementById('taskEndTime').value,
                 priority: document.querySelector('input[name="priority"]:checked').value,
                 category: document.getElementById('taskCategory').value,
-                status: 'รอดำเนินการ',
-                reminder1_dt: rem1_dt,
-                reminder2_dt: rem2_dt,
+                status: document.getElementById('taskStatusHidden').value, 
+                reminder1_dt: (r1d && r1t) ? `${r1d}T${r1t}:00` : '',
+                reminder2_dt: (r2d && r2t) ? `${r2d}T${r2t}:00` : '',
                 password: pwd
             };
 
@@ -614,7 +569,7 @@
                     const newData = await apiCall('getInitialData');
                     initApp(newData);
                 } else {
-                    Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: res.message });
+                    Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาดจากเซิร์ฟเวอร์', text: res.message });
                 }
             } catch (error) {
                 Swal.fire({ icon: 'error', title: 'บันทึกล้มเหลว', text: error.message });
@@ -636,9 +591,7 @@
             });
 
             if (password !== 'wmk' && password !== 'Wmk') {
-                if (password !== undefined) { 
-                    Swal.fire('รหัสผ่านผิด', '', 'error');
-                }
+                if (password !== undefined) Swal.fire('รหัสผ่านผิด', '', 'error');
                 checkboxElement.checked = !isChecked;
                 return;
             }
@@ -658,25 +611,21 @@
             }
         }
 
-        function editTask(id) {
-            openTaskModal(id);
-        }
+        function editTask(id) { openTaskModal(id); }
 
         function deleteTask(id) {
             Swal.fire({
                 title: 'ยืนยันการลบ?',
-                text: "ลบแล้วไม่สามารถกู้คืนได้",
+                text: "ลบแล้วไม่สามารถกู้คืนได้ (ต้องใส่รหัส wmk)",
                 input: 'password',
-                inputPlaceholder: 'รหัสผ่าน',
+                inputPlaceholder: 'รหัสผ่าน (wmk)',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#D32F2F',
                 confirmButtonText: 'ลบข้อมูล'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    if(result.value !== 'wmk' && result.value !== 'Wmk'){
-                         Swal.fire('รหัสผ่านผิด', '', 'error'); return;
-                    }
+                    if(result.value !== 'wmk' && result.value !== 'Wmk') return Swal.fire('รหัสผ่านผิด', '', 'error');
                     Swal.fire({ title: 'กำลังลบข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                     try {
                         await apiCall('deleteTask', { id: id });
@@ -715,28 +664,26 @@
                 
                 let thDate = "-";
                 if(t.date) {
-                    try {
-                        let d = new Date(t.date.substring(0,10));
-                        thDate = d.toLocaleDateString('th-TH');
-                    } catch (e) { thDate = t.date; }
+                    try { thDate = new Date(t.date.substring(0,10)).toLocaleDateString('th-TH'); } catch(e){}
                 }
                 
                 let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-gray-50 transition ${isDone ? 'bg-gray-50 text-gray-400' : ''}">
-                        <td class="p-3 text-center">
+                    <tr class="hover:bg-gray-100 transition cursor-pointer ${isDone ? 'bg-gray-50 text-gray-400' : ''}" onclick="editTask('${t.id}')">
+                        <td class="p-3 text-center" onclick="event.stopPropagation()">
                             <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus(this, '${t.id}')" class="w-4 h-4 text-wmkRed rounded">
                         </td>
                         <td class="p-3 font-medium ${isDone ? 'line-through' : 'text-gray-800'}">
                             ${t.title || ''} 
-                            ${t.link ? `<a href="${t.link}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1" title="เปิดลิงก์"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                            ${t.link ? `<a href="${t.link}" target="_blank" onclick="event.stopPropagation()" class="text-blue-500 hover:text-blue-700 ml-1" title="เปิดลิงก์"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                            ${t.linkpic ? `<a href="${t.linkpic}" target="_blank" onclick="event.stopPropagation()" class="text-green-500 hover:text-green-700 ml-1" title="ดูรูปภาพ"><i class="fas fa-image"></i></a>` : ''}
                         </td>
                         <td class="p-3">${thDate}</td>
                         <td class="p-3">${displayTime}</td>
                         <td class="p-3">${pIcon} ${t.priority || ''}</td>
                         <td class="p-3"><span class="px-2 py-1 rounded text-white text-xs" style="background-color: ${catColor}">${t.category || ''}</span></td>
-                        <td class="p-3 text-center space-x-2">
+                        <td class="p-3 text-center space-x-2" onclick="event.stopPropagation()">
                             <button onclick="editTask('${t.id}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded"><i class="fas fa-edit"></i></button>
                             <button onclick="deleteTask('${t.id}')" class="text-red-500 hover:bg-red-50 p-1.5 rounded"><i class="fas fa-trash-alt"></i></button>
                         </td>
