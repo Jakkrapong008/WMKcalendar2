@@ -38,7 +38,10 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #D32F2F; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #B71C1C; }
+        
+        /* Top Navigation styling */
         .nav-item.active { background-color: rgba(255, 255, 255, 0.15); border-bottom-color: #FBC02D; font-weight: 600; color: #FFF9C4; }
+        
         .calendar-day { min-height: 80px; transition: 0.2s; cursor: pointer; }
         .calendar-day:hover { background-color: #FFF9C4; }
         .today-mark { background-color: #D32F2F; color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; }
@@ -48,6 +51,7 @@
 
     <header class="bg-wmkRed text-white shadow-md z-20">
         <div class="flex flex-col items-center justify-center py-5 border-b border-red-800">
+            <!-- รวมชื่อและโลโก้ไว้ตรงกลาง บรรทัดเดียว -->
             <div class="flex items-center gap-4">
                 <img src="https://img2.pic.in.th/logob0b7643db577ceee.png" alt="Logo" class="w-14 h-14 bg-white rounded-full p-1 shadow-lg">
                 <h1 class="text-2xl font-bold leading-tight tracking-wide">ปฏิทินกิจกรรม โรงเรียนวัดแม่กะ</h1>
@@ -118,7 +122,8 @@
                         <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-gray-500 mb-2">
                             <div class="text-red-500">อา.</div><div>จ.</div><div>อ.</div><div>พ.</div><div>พฤ.</div><div>ศ.</div><div class="text-wmkRed">ส.</div>
                         </div>
-                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200"></div>
+                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 bg-gray-200 border border-gray-200">
+                        </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col h-[500px]">
@@ -126,7 +131,8 @@
                             <h3 class="font-bold text-gray-800 flex items-center"><span class="w-2 h-2 rounded-full bg-wmkRed mr-2"></span>งานที่เลือกวันนี้</h3>
                             <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full" id="selectedDateText"></span>
                         </div>
-                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList"></div>
+                        <div class="flex-1 overflow-y-auto space-y-3 pr-1" id="dailyTaskList">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -169,7 +175,8 @@
                                     <th class="p-3 text-center">จัดการ</th>
                                 </tr>
                             </thead>
-                            <tbody id="taskTableBody" class="divide-y divide-gray-200"></tbody>
+                            <tbody id="taskTableBody" class="divide-y divide-gray-200">
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -180,15 +187,10 @@
     
     <footer class="bg-white py-6 text-center shadow-inner border-t mt-auto flex-shrink-0 w-full">
         <div class="max-w-7xl mx-auto px-4">
-            <p class="mb-1 text-sm text-gray-500">
-                <i class="fa-solid fa-chart-line mr-1 text-gray-400"></i> จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด 
-                <span id="viewCountDisplay" class="font-bold text-wmkRed ml-1 mr-1"><i class="fa-solid fa-spinner fa-spin fa-sm"></i></span> ครั้ง
-            </p>
-            <small class="text-xs text-gray-400">© 2026 โรงเรียนวัดแม่กะ</small>
+            <small class="text-xs text-gray-500">© 2026 โรงเรียนวัดแม่กะ</small>
         </div>
     </footer>
 
-    <!-- MODAL -->
     <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-fade-in flex flex-col max-h-[90vh]">
             <div class="bg-wmkRed text-white px-5 py-4 flex justify-between items-center">
@@ -198,8 +200,7 @@
             
             <div class="p-5 overflow-y-auto flex-1 space-y-4">
                 <input type="hidden" id="taskId">
-                <input type="hidden" id="taskLinkpic"> 
-                <input type="hidden" id="taskStatusHidden"> 
+                <input type="hidden" id="taskLinkpic"> <!-- ซ่อนไว้เก็บลิงก์รูปเก่า -->
                 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">ชื่องาน / กิจกรรมสำคัญ <span class="text-red-500">*</span></label>
@@ -257,7 +258,7 @@
                 </div>
 
                 <div class="bg-green-50 border border-green-200 rounded-xl p-4">
-                    <h4 class="text-sm font-bold text-green-800 flex items-center mb-3"><i class="fab fa-line text-lg mr-2 text-green-500"></i> ตั้งค่าการแจ้งเตือน LINE</h4>
+                    <h4 class="text-sm font-bold text-green-800 flex items-center mb-3"><i class="fab fa-line text-lg mr-2 text-green-500"></i> ตั้งค่าการแจ้งเตือน LINE (สูงสุด 2 ครั้ง)</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-white p-3 rounded-lg border border-green-100 shadow-sm">
                             <label class="block text-xs font-bold text-gray-600 mb-2">แจ้งเตือนครั้งที่ 1</label>
@@ -275,11 +276,39 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 2.1 เพิ่มสถานะงาน (ดึงค่ามาแสดงและเปลี่ยนได้) -->
+                <div class="mt-4 border-t pt-4">
+                    <label class="block text-xs font-bold text-gray-700 mb-2">สถานะงาน <span class="text-red-500">*</span></label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="taskStatusModal" value="รอดำเนินการ" class="w-4 h-4 text-wmkRed focus:ring-wmkRed border-gray-300" checked>
+                            <span class="text-sm text-gray-700">รอดำเนินการ</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="taskStatusModal" value="เสร็จสิ้น" class="w-4 h-4 text-green-600 focus:ring-green-500 border-gray-300">
+                            <span class="text-sm text-gray-700">เสร็จสิ้น</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 2.2 เพิ่มหัวข้อ ภาพประกอบ -->
+                <div class="mt-4 border-t pt-4">
+                    <label class="block text-xs font-bold text-gray-700 mb-1">ภาพประกอบ (อัปโหลดเข้า Drive อัตโนมัติ)</label>
+                    <input type="file" id="taskImageFile" accept="image/*" onchange="previewImage(event)" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-wmkRed hover:file:bg-red-100 cursor-pointer">
+                    
+                    <!-- ส่วนแสดงตัวอย่างภาพ -->
+                    <div id="imagePreviewContainer" class="mt-3 hidden">
+                        <p class="text-xs text-gray-500 mb-1">ตัวอย่างภาพประกอบปัจจุบัน:</p>
+                        <img id="imagePreview" src="" alt="Preview" class="max-h-48 rounded-lg border shadow-sm object-cover">
+                    </div>
+                </div>
                 
                 <div class="mt-4 border-t pt-4">
                     <label class="block text-xs font-bold text-gray-700 mb-1">รหัสผ่านยืนยันการบันทึก <span class="text-red-500">*</span></label>
                     <input type="password" id="taskPassword" class="w-full border border-red-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-wmkRed outline-none bg-red-50" placeholder="">
                 </div>
+
             </div>
 
             <div class="bg-gray-50 px-5 py-4 border-t flex justify-end gap-3">
@@ -290,9 +319,6 @@
     </div>
 
     <script>
-        // -------------------------------------------------------------
-        // ** อย่าลืมแก้ไข URL นี้เป็นลิงก์ API ล่าสุดของคุณ **
-        // -------------------------------------------------------------
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz0OgWZkx82w4LM_6raqdfRQf1OetctZs3fvP8t_CkoGvv_mfpN5aJRrLT8cdkYAQ8/exec";
 
         async function apiCall(action, payload = {}) {
@@ -327,7 +353,7 @@
                 Swal.close();
                 initApp(data);
             } catch (error) {
-                Swal.fire({ icon: 'error', title: 'ข้อผิดพลาดระบบ', text: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้' });
+                Swal.fire({ icon: 'error', title: 'ข้อผิดพลาดระบบ', text: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง' });
             }
         });
 
@@ -337,7 +363,9 @@
                 if (typeof val === 'string') {
                     if (val.includes('T') && val.includes('Z')) {
                         const d = new Date(val);
-                        if (!isNaN(d.getTime())) return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+                        if (!isNaN(d.getTime())) {
+                            return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+                        }
                     }
                     const match = val.match(/T(\d{2}:\d{2})/);
                     if (match) return match[1]; 
@@ -349,7 +377,7 @@
                 id: t.ID !== undefined ? t.ID : t.id,
                 title: t.Title !== undefined ? t.Title : t.title,
                 link: t.Link !== undefined ? t.Link : t.link,
-                linkpic: t.Linkpic !== undefined ? t.Linkpic : t.linkpic,
+                linkpic: t.Linkpic !== undefined ? t.Linkpic : t.linkpic, // ดึงข้อมูล linkpic
                 description: t.Description !== undefined ? t.Description : t.description,
                 date: t.Date !== undefined ? t.Date : t.date,
                 startTime: extractTime(t.StartTime !== undefined ? t.StartTime : t.startTime),
@@ -362,7 +390,6 @@
             }));
             
             appState.categories = data.categories || [];
-            document.getElementById('viewCountDisplay').innerText = data.visitorCount || 1;
             
             renderCategoryDropdowns();
             renderCalendar();
@@ -373,19 +400,25 @@
         function switchView(viewId) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`nav-${viewId}`).classList.add('active');
+            
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-library').classList.add('hidden');
+            
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
         }
 
         function updateKPIs() {
-            const todayStr = new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + String(new Date().getDate()).padStart(2, '0');
+            const todayDateObj = new Date();
+            const todayStr = todayDateObj.getFullYear() + "-" + String(todayDateObj.getMonth() + 1).padStart(2, '0') + "-" + String(todayDateObj.getDate()).padStart(2, '0');
+            
             let today = 0, pending = 0, done = 0;
+            
             appState.tasks.forEach(t => {
                 if(t.date && t.date.substring(0,10) === todayStr) today++;
                 if(t.status === 'รอดำเนินการ') pending++;
                 if(t.status === 'เสร็จสิ้น') done++;
             });
+            
             document.getElementById('kpi-today').innerText = today;
             document.getElementById('kpi-pending').innerText = pending;
             document.getElementById('kpi-done').innerText = done;
@@ -402,9 +435,12 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
             
-            for(let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
+            for(let i = 0; i < firstDay; i++) {
+                grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
+            }
             
-            const todayStr = new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + String(new Date().getDate()).padStart(2, '0');
+            const todayObj = new Date();
+            const todayStr = todayObj.getFullYear() + "-" + String(todayObj.getMonth() + 1).padStart(2, '0') + "-" + String(todayObj.getDate()).padStart(2, '0');
             const selectedStr = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
 
             for(let d = 1; d <= daysInMonth; d++) {
@@ -433,21 +469,37 @@
             }
             
             let totalCells = firstDay + daysInMonth;
-            while(totalCells % 7 !== 0) { grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`; totalCells++; }
+            while(totalCells % 7 !== 0) {
+                grid.innerHTML += `<div class="bg-white calendar-day opacity-50 p-1"></div>`;
+                totalCells++;
+            }
             renderDailyTasks();
         }
 
-        function changeMonth(dir) { appState.currentDate.setMonth(appState.currentDate.getMonth() + dir); renderCalendar(); }
-        function selectDate(dateStr) { const parts = dateStr.split('-'); appState.selectedDate = new Date(parts[0], parts[1]-1, parts[2]); renderCalendar(); }
+        function changeMonth(dir) {
+            appState.currentDate.setMonth(appState.currentDate.getMonth() + dir);
+            renderCalendar();
+        }
+
+        function selectDate(dateStr) {
+            const parts = dateStr.split('-');
+            appState.selectedDate = new Date(parts[0], parts[1]-1, parts[2]);
+            renderCalendar();
+        }
 
         function renderDailyTasks() {
             const dateStr = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
-            document.getElementById('selectedDateText').innerText = appState.selectedDate.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+            const thDate = appState.selectedDate.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('selectedDateText').innerText = thDate;
             
             const list = document.getElementById('dailyTaskList');
             list.innerHTML = '';
             
-            const tasks = appState.tasks.filter(t => t.date && t.date.substring(0,10) === dateStr).sort((a,b) => (a.startTime||"24:00").localeCompare(b.startTime||"24:00"));
+            const tasks = appState.tasks.filter(t => t.date && t.date.substring(0,10) === dateStr).sort((a,b) => {
+                let timeA = a.startTime || "24:00";
+                let timeB = b.startTime || "24:00";
+                return timeA.localeCompare(timeB);
+            });
             
             if(tasks.length === 0) {
                 list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm flex flex-col items-center"><i class="far fa-folder-open text-4xl mb-2 opacity-50"></i>ไม่มีงานในวันนี้</div>`;
@@ -457,16 +509,18 @@
             tasks.forEach(t => {
                 let catColor = appState.categories.find(c => c.name === t.category)?.color || '#999';
                 let isDone = t.status === 'เสร็จสิ้น';
+                let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
+                
                 list.innerHTML += `
                     <div class="border rounded-lg p-3 flex gap-3 hover-card bg-white relative overflow-hidden group ${isDone ? 'opacity-60 bg-gray-50' : ''}">
                         <div class="w-1.5 absolute left-0 top-0 bottom-0" style="background-color: ${catColor}"></div>
-                        <div class="flex items-center pl-2" onclick="event.stopPropagation()">
+                        <div class="flex items-center pl-2">
                             <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus(this, '${t.id}')" class="w-5 h-5 text-wmkRed rounded border-gray-300 focus:ring-wmkRed cursor-pointer">
                         </div>
                         <div class="flex-1 cursor-pointer" onclick="editTask('${t.id}')">
                             <h4 class="font-bold text-sm text-gray-800 ${isDone ? 'line-through' : ''}">${t.title}</h4>
                             <div class="flex gap-3 text-xs text-gray-500 mt-1">
-                                <span><i class="far fa-clock"></i> ${t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-'}</span>
+                                <span><i class="far fa-clock"></i> ${displayTime}</span>
                                 <span style="color: ${catColor}" class="font-medium bg-gray-100 px-1.5 rounded">${t.category}</span>
                             </div>
                         </div>
@@ -475,8 +529,34 @@
             });
         }
 
+        // แสดงพรีวิวรูปภาพที่เลือก
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const previewImage = document.getElementById('imagePreview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                // ถ้าไม่ได้เลือกไฟล์ หรือกดยกเลิก
+                if (!document.getElementById('taskLinkpic').value) {
+                    previewContainer.classList.add('hidden');
+                    previewImage.src = '';
+                } else {
+                    // กลับไปโชว์รูปเก่าถ้ามี
+                    previewImage.src = document.getElementById('taskLinkpic').value;
+                }
+            }
+        }
+
         function openTaskModal(taskId = null) {
             document.getElementById('taskPassword').value = ''; 
+            document.getElementById('taskImageFile').value = ''; // รีเซ็ตช่องเลือกไฟล์
             
             if (taskId) {
                 document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> แก้ไขงาน';
@@ -491,74 +571,135 @@
                     document.getElementById('taskStartTime').value = t.startTime || '';
                     document.getElementById('taskEndTime').value = t.endTime || '';
                     
-                    let pRadio = document.querySelector(`input[name="priority"][value="${t.priority}"]`);
-                    if(pRadio) pRadio.checked = true;
+                    let priorityRadio = document.querySelector(`input[name="priority"][value="${t.priority}"]`);
+                    if(priorityRadio) priorityRadio.checked = true;
+                    
                     document.getElementById('taskCategory').value = t.category || '';
                     
-                    let setRemDate = (dt, dId, tId) => {
-                        if(dt && !isNaN(new Date(dt).getTime())) {
-                            let d = new Date(dt);
-                            document.getElementById(dId).value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
-                            document.getElementById(tId).value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
-                        } else {
-                            document.getElementById(dId).value = ''; document.getElementById(tId).value = ''; 
+                    if(t.reminder1_dt) { 
+                        let d = new Date(t.reminder1_dt); 
+                        if (!isNaN(d.getTime())) {
+                            document.getElementById('rem1Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+                            document.getElementById('rem1Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
                         }
-                    };
-                    setRemDate(t.reminder1_dt, 'rem1Date', 'rem1Time');
-                    setRemDate(t.reminder2_dt, 'rem2Date', 'rem2Time');
+                    } else { 
+                        document.getElementById('rem1Date').value = ''; document.getElementById('rem1Time').value = ''; 
+                    }
+                    if(t.reminder2_dt) { 
+                        let d = new Date(t.reminder2_dt); 
+                        if (!isNaN(d.getTime())) {
+                            document.getElementById('rem2Date').value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+                            document.getElementById('rem2Time').value = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
+                        }
+                    } else { 
+                        document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = ''; 
+                    }
 
-                    document.getElementById('taskStatusHidden').value = t.status || 'รอดำเนินการ';
+                    // ดึงค่าสถานะมาแสดง (ถ้าเสร็จสิ้นให้ติ๊กช่องเสร็จสิ้น)
+                    if(t.status === 'เสร็จสิ้น') {
+                        document.querySelector(`input[name="taskStatusModal"][value="เสร็จสิ้น"]`).checked = true;
+                    } else {
+                        document.querySelector(`input[name="taskStatusModal"][value="รอดำเนินการ"]`).checked = true;
+                    }
+
+                    // จัดการแสดงผลรูปภาพเดิม
                     document.getElementById('taskLinkpic').value = t.linkpic || '';
+                    if (t.linkpic) {
+                        document.getElementById('imagePreview').src = t.linkpic;
+                        document.getElementById('imagePreviewContainer').classList.remove('hidden');
+                    } else {
+                        document.getElementById('imagePreview').src = '';
+                        document.getElementById('imagePreviewContainer').classList.add('hidden');
+                    }
                 }
             } else {
                 document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> สร้างงานใหม่';
                 document.getElementById('taskId').value = '';
                 document.getElementById('taskTitle').value = '';
                 document.getElementById('taskLink').value = '';
-                document.getElementById('taskLinkpic').value = ''; 
-                document.getElementById('taskStatusHidden').value = 'รอดำเนินการ';
+                document.getElementById('taskLinkpic').value = ''; // ล้างลิงก์รูป
                 document.getElementById('taskDesc').value = '';
                 
-                document.getElementById('taskDate').value = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
-                document.getElementById('taskStartTime').value = ''; document.getElementById('taskEndTime').value = '';
+                let selStr = appState.selectedDate.getFullYear() + "-" + String(appState.selectedDate.getMonth() + 1).padStart(2, '0') + "-" + String(appState.selectedDate.getDate()).padStart(2, '0');
+                document.getElementById('taskDate').value = selStr;
+                
+                document.getElementById('taskStartTime').value = '';
+                document.getElementById('taskEndTime').value = '';
                 document.querySelector(`input[name="priority"][value="ปานกลาง"]`).checked = true;
+                document.querySelector(`input[name="taskStatusModal"][value="รอดำเนินการ"]`).checked = true; // ค่าเริ่มต้นสถานะ
                 
                 document.getElementById('rem1Date').value = ''; document.getElementById('rem1Time').value = '';
                 document.getElementById('rem2Date').value = ''; document.getElementById('rem2Time').value = '';
+
+                // ซ่อนกรอบพรีวิวรูป
+                document.getElementById('imagePreview').src = '';
+                document.getElementById('imagePreviewContainer').classList.add('hidden');
             }
             document.getElementById('taskModal').classList.remove('hidden');
         }
 
-        function closeTaskModal() { document.getElementById('taskModal').classList.add('hidden'); }
+        function closeTaskModal() {
+            document.getElementById('taskModal').classList.add('hidden');
+        }
 
         async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
-            if(pwd !== 'wmk' && pwd !== 'Wmk') return Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
+            if(pwd !== 'wmk' && pwd !== 'Wmk') {
+                Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
+                return;
+            }
 
             const title = document.getElementById('taskTitle').value.trim();
             const date = document.getElementById('taskDate').value;
-            if(!title || !date) return Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่องานและวันที่' });
+            if(!title || !date) {
+                Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกชื่องานและวันที่' });
+                return;
+            }
 
-            Swal.fire({ title: 'กำลังบันทึก...', html: 'โปรดรอสักครู่...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            Swal.fire({ title: 'กำลังบันทึก...', html: 'โปรดรอสักครู่ (หากมีการอัปโหลดภาพอาจใช้เวลา 5-10 วินาที)', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
             let r1d = document.getElementById('rem1Date').value, r1t = document.getElementById('rem1Time').value;
             let r2d = document.getElementById('rem2Date').value, r2t = document.getElementById('rem2Time').value;
+            let rem1_dt = (r1d && r1t) ? `${r1d}T${r1t}:00` : '';
+            let rem2_dt = (r2d && r2t) ? `${r2d}T${r2t}:00` : '';
+
+            // เตรียมข้อมูลรูปภาพเพื่อส่งไป Google Drive
+            let fileInput = document.getElementById('taskImageFile');
+            let fileData = null;
+            let fileName = null;
+            let mimeType = null;
+
+            if (fileInput.files.length > 0) {
+                let file = fileInput.files[0];
+                fileName = file.name;
+                mimeType = file.type;
+                // แปลงไฟล์เป็น Base64 String เพื่อส่งผ่าน JSON API ได้
+                fileData = await new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result.split(',')[1]); 
+                    reader.readAsDataURL(file);
+                });
+            }
 
             const taskData = {
                 id: document.getElementById('taskId').value,
                 title: title,
                 link: document.getElementById('taskLink').value.trim(),
-                linkpic: document.getElementById('taskLinkpic').value.trim(), 
+                linkpic: document.getElementById('taskLinkpic').value.trim(), // ส่งลิงก์เดิมไปด้วย
                 description: document.getElementById('taskDesc').value,
                 date: date,
                 startTime: document.getElementById('taskStartTime').value,
                 endTime: document.getElementById('taskEndTime').value,
                 priority: document.querySelector('input[name="priority"]:checked').value,
                 category: document.getElementById('taskCategory').value,
-                status: document.getElementById('taskStatusHidden').value, 
-                reminder1_dt: (r1d && r1t) ? `${r1d}T${r1t}:00` : '',
-                reminder2_dt: (r2d && r2t) ? `${r2d}T${r2t}:00` : '',
-                password: pwd
+                status: document.querySelector('input[name="taskStatusModal"]:checked').value, // ดึงค่าจากปุ่มสถานะใน popup
+                reminder1_dt: rem1_dt,
+                reminder2_dt: rem2_dt,
+                password: pwd,
+                // ข้อมูลสำหรับอัปโหลดภาพ
+                imageData: fileData,
+                imageName: fileName,
+                imageMimeType: mimeType
             };
 
             try {
@@ -569,7 +710,7 @@
                     const newData = await apiCall('getInitialData');
                     initApp(newData);
                 } else {
-                    Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาดจากเซิร์ฟเวอร์', text: res.message });
+                    Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: res.message });
                 }
             } catch (error) {
                 Swal.fire({ icon: 'error', title: 'บันทึกล้มเหลว', text: error.message });
@@ -591,7 +732,9 @@
             });
 
             if (password !== 'wmk' && password !== 'Wmk') {
-                if (password !== undefined) Swal.fire('รหัสผ่านผิด', '', 'error');
+                if (password !== undefined) { 
+                    Swal.fire('รหัสผ่านผิด', '', 'error');
+                }
                 checkboxElement.checked = !isChecked;
                 return;
             }
@@ -611,7 +754,9 @@
             }
         }
 
-        function editTask(id) { openTaskModal(id); }
+        function editTask(id) {
+            openTaskModal(id);
+        }
 
         function deleteTask(id) {
             Swal.fire({
@@ -625,7 +770,9 @@
                 confirmButtonText: 'ลบข้อมูล'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    if(result.value !== 'wmk' && result.value !== 'Wmk') return Swal.fire('รหัสผ่านผิด', '', 'error');
+                    if(result.value !== 'wmk' && result.value !== 'Wmk'){
+                         Swal.fire('รหัสผ่านผิด', '', 'error'); return;
+                    }
                     Swal.fire({ title: 'กำลังลบข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                     try {
                         await apiCall('deleteTask', { id: id });
@@ -664,26 +811,28 @@
                 
                 let thDate = "-";
                 if(t.date) {
-                    try { thDate = new Date(t.date.substring(0,10)).toLocaleDateString('th-TH'); } catch(e){}
+                    try {
+                        let d = new Date(t.date.substring(0,10));
+                        thDate = d.toLocaleDateString('th-TH');
+                    } catch (e) { thDate = t.date; }
                 }
                 
                 let displayTime = t.startTime ? t.startTime.replace(':', '.') + ' น.' : '-';
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-gray-100 transition cursor-pointer ${isDone ? 'bg-gray-50 text-gray-400' : ''}" onclick="editTask('${t.id}')">
-                        <td class="p-3 text-center" onclick="event.stopPropagation()">
+                    <tr class="hover:bg-gray-50 transition ${isDone ? 'bg-gray-50 text-gray-400' : ''}">
+                        <td class="p-3 text-center">
                             <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus(this, '${t.id}')" class="w-4 h-4 text-wmkRed rounded">
                         </td>
                         <td class="p-3 font-medium ${isDone ? 'line-through' : 'text-gray-800'}">
                             ${t.title || ''} 
-                            ${t.link ? `<a href="${t.link}" target="_blank" onclick="event.stopPropagation()" class="text-blue-500 hover:text-blue-700 ml-1" title="เปิดลิงก์"><i class="fas fa-external-link-alt"></i></a>` : ''}
-                            ${t.linkpic ? `<a href="${t.linkpic}" target="_blank" onclick="event.stopPropagation()" class="text-green-500 hover:text-green-700 ml-1" title="ดูรูปภาพ"><i class="fas fa-image"></i></a>` : ''}
+                            ${t.link ? `<a href="${t.link}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1" title="เปิดลิงก์"><i class="fas fa-external-link-alt"></i></a>` : ''}
                         </td>
                         <td class="p-3">${thDate}</td>
                         <td class="p-3">${displayTime}</td>
                         <td class="p-3">${pIcon} ${t.priority || ''}</td>
                         <td class="p-3"><span class="px-2 py-1 rounded text-white text-xs" style="background-color: ${catColor}">${t.category || ''}</span></td>
-                        <td class="p-3 text-center space-x-2" onclick="event.stopPropagation()">
+                        <td class="p-3 text-center space-x-2">
                             <button onclick="editTask('${t.id}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded"><i class="fas fa-edit"></i></button>
                             <button onclick="deleteTask('${t.id}')" class="text-red-500 hover:bg-red-50 p-1.5 rounded"><i class="fas fa-trash-alt"></i></button>
                         </td>
