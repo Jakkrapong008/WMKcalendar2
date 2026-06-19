@@ -534,7 +534,7 @@
 
         async function saveTask() {
             const pwd = document.getElementById('taskPassword').value;
-            if(pwd !== 'wmk' && pwd !== 'Wmk') return Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่าน (wmk) เพื่อบันทึกข้อมูล' });
+            if(pwd !== 'wmk' && pwd !== 'Wmk') return Swal.fire({ icon: 'error', title: 'รหัสผ่านผิด', text: 'กรุณากรอกรหัสผ่านเพื่อบันทึกข้อมูล' });
 
             const title = document.getElementById('taskTitle').value.trim();
             const date = document.getElementById('taskDate').value;
@@ -581,7 +581,7 @@
             const isChecked = checkboxElement.checked;
             const { value: password } = await Swal.fire({
                 title: 'ยืนยันการเปลี่ยนสถานะ',
-                text: "กรุณากรอกรหัสผ่าน (wmk)",
+                text: "กรุณากรอกรหัสผ่าน",
                 input: 'password',
                 inputPlaceholder: 'รหัสผ่าน',
                 icon: 'warning',
@@ -617,9 +617,9 @@
         function deleteTask(id) {
             Swal.fire({
                 title: 'ยืนยันการลบ?',
-                text: "ลบแล้วไม่สามารถกู้คืนได้ (ต้องใส่รหัส wmk)",
+                text: "ลบแล้วไม่สามารถกู้คืนได้ (ต้องใส่รหัส)",
                 input: 'password',
-                inputPlaceholder: 'รหัสผ่าน (wmk)',
+                inputPlaceholder: 'รหัสผ่าน',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#D32F2F',
