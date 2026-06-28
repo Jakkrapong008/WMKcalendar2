@@ -139,7 +139,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
-                        <!-- เปลี่ยน onkeyup เป็น oninput เพื่อให้รับภาษาไทยได้สมบูรณ์ขึ้น -->
                         <input type="text" id="filterSearch" placeholder="🔍 ค้นหาชื่องาน..." class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" oninput="renderTable()">
                         <select id="filterStatus" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-wmkRed outline-none" onchange="renderTable()">
                             <option value="">ทุกสถานะการทำงาน</option>
@@ -291,9 +290,6 @@
     </div>
 
     <script>
-        // -------------------------------------------------------------
-        // ** อย่าลืมแก้ไข URL นี้เป็นลิงก์ API ล่าสุดของคุณ **
-        // -------------------------------------------------------------
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz0OgWZkx82w4LM_6raqdfRQf1OetctZs3fvP8t_CkoGvv_mfpN5aJRrLT8cdkYAQ8/exec";
 
         async function apiCall(action, payload = {}) {
@@ -336,12 +332,9 @@
             const extractTime = (val) => {
                 if (!val) return '';
                 if (typeof val === 'string') {
-                    if (val.includes('T') && val.includes('Z')) {
-                        const d = new Date(val);
-                        if (!isNaN(d.getTime())) return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
-                    }
-                    const match = val.match(/T(\d{2}:\d{2})/);
-                    if (match) return match[1]; 
+                    // ดึงเฉพาะเวลา HH:mm อย่างปลอดภัย
+                    const match = val.match(/(?:T|\s|^)(\d{2}:\d{2})/);
+                    if (match) return match[1];
                 }
                 return String(val);
             };
@@ -648,7 +641,6 @@
             
             let filtered = appState.tasks.filter(t => {
                 let match = true;
-                // แก้ไขปัญหา Type Error ด้วยการแปลง t.title เป็น String ก่อนเรียกใช้ .toLowerCase()
                 if(search && (!t.title || !String(t.title).toLowerCase().includes(search))) match = false;
                 if(status && t.status !== status) match = false;
                 if(priority && t.priority !== priority) match = false;
