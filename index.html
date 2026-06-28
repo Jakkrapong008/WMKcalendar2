@@ -332,7 +332,13 @@
             const extractTime = (val) => {
                 if (!val) return '';
                 if (typeof val === 'string') {
-                    // ดึงเฉพาะเวลา HH:mm อย่างปลอดภัย
+                    // แก้ปัญหากรอก 10:00 แล้วเป็น 03:00 (ระบบดึง UTC มาแสดง)
+                    if (val.includes('T') && val.includes('Z')) {
+                        const d = new Date(val);
+                        if (!isNaN(d.getTime())) {
+                            return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+                        }
+                    }
                     const match = val.match(/(?:T|\s|^)(\d{2}:\d{2})/);
                     if (match) return match[1];
                 }
